@@ -28,7 +28,7 @@ class ProjectsForm extends Component {
     console.log('{queryRef}');
     */
     render(){
-        const {onChange , form}=this.props
+        //const {onChange , form}=this.props
         return (
             <div className="container">
                 <form 

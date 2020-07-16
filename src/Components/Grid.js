@@ -29,10 +29,13 @@ export class Grid extends Component {
     }
     componentDidMount(){
         this.getData()
+        this.setState({
+
+        })
     }
     render(){
         return(
-            <div className=" bg-gray-400">
+            <div className=" h-auto w-auto ml-2 mr-2 mb-4 bg-gray-400">
             <Projects 
                 projects={this.state.data}
             />
