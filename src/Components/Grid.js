@@ -13,7 +13,7 @@ export class Grid extends Component {
     async getData(){
         try {
             let { data } = await axios.post(
-                'http://localhost:5000/applandproyects/us-central1/getProject',
+                'http://localhost:5000/applandproyects/us-central1/project',
               );
               if (data.success ){
                   console.log(data);
