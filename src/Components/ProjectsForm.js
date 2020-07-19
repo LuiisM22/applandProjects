@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-
+import axios from "axios";
 /* 
 const NewProjects =(props)=>(
     <div className="flex mb-4 animated fadeIn Low">
@@ -18,7 +18,25 @@ class ProjectsForm extends Component {
         e.preventDefault()
         console.log(this.state)
     }
+    async getData(){
+        try {
+            let url ="http://localhost:5000/applandproyects/us-central1/api/projects/: "
+            let { data } = await axios.post(url
+                );
+                if (data.success ){
+                    console.log(data);
+                    this.state={
+                        Data2:data.data
+                    }
+                               // this.state.Data2:data.data
 
+                }
+                else{
+                    console.log('error ');
+                }
+        } catch (error) {   
+        }
+    }
 
     // Create a reference to the cities collection
 /*     let citiesRef = db.collection('cities');

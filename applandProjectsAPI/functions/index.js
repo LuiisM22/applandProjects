@@ -12,18 +12,42 @@ const db = admin.firestore();
 const app = express();
 app.use( cors ({origin:true}));
 app.use(bodyParser.urlencoded({extended: false})); app.use(bodyParser.json());
-exports.api =functions.https.onRequest( app );
+////////////////////////////////////////////////////////////////////////////////////////////////////
+async function getAll( collections, req, res){
+  try {
+    let data=[]
+    const collectionRef = db.collection(collections);
+    const docSnap = await collectionRef.get();
+    const collection = docSnap.docs.forEach(  doc=> {
+      data.push({
+          id: doc.id ,
+          ...doc.data(),
+        })
+  });
+  res.status(201).json({
+    success: true,
+    data, 
+    message:'correctamente'
+});
+} catch (error) {
+  res.status(500).json({
+    success: false,
+    data:[] ,
+    error
+  });
+  }
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/projects',(req, res)=>{
-    getAll('projects',res);
-}); 
+    getAll('projects',req ,res);
+  }); 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/categories',(req, res)=>{
-  getAll('categories', res)
+  getAll('categories', req, res)
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/types',(req, res)=>{
-  getAll('types',res)
+  getAll('types', req, res)
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post('/projects',async(req, res) =>{
@@ -43,7 +67,7 @@ app.post('/projects',async(req, res) =>{
       res.status(201).json({
         success: true,
         message:'se ha guardado correctamente'
-    });
+      });
     }
   } catch (error) {
     res.status(500).json({
@@ -53,11 +77,11 @@ app.post('/projects',async(req, res) =>{
   }
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get('/projects/:idAuthor',async(req, res)=>{
+app.get('/projects/:idProject',async(req, res)=>{
   try {
     let data=[]
     const projectsRef = db.collection('projects');
-    const docSnap = await projectsRef.where('autor',"==" , req.params.idAuthor).get();
+    const docSnap = await projectsRef.where('category',"==" , req.params.idAuthor).get();
     const projects = docSnap.docs.forEach(  doc=> {
       data.push({
         id: doc.id ,
@@ -78,28 +102,6 @@ app.get('/projects/:idAuthor',async(req, res)=>{
 }
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-  async function getAll( collections, res){
-    try {
-      let data=[]
-      const collectionRef = db.collection(collections);
-      const docSnap = await collectionRef.get();
-      const collection = docSnap.docs.forEach(  doc=> {
-        data.push({
-            id: doc.id ,
-            ...doc.data()
-        })
-    });
-    res.status(201).json({
-      success: true,
-      data:data ,
-      message:'datos obtenidos correctamente'
-  });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      data:[] ,
-      error
-    });
-    }
-}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+exports.api =functions.https.onRequest( app );
