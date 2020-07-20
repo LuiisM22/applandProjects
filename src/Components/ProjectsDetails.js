@@ -11,15 +11,17 @@ const NewProjects =(props)=>(
 export default NewProjects
 import React from 'react' */
 
-class ProjectsForm extends Component {
+class ProjectsDetails extends Component {
+
+
     handleSubmit = e => {
         e.preventDefault()
         console.log(this.state)
     }
     async getData(){
+        let projectId = this.props.match.params.id;
         try {
-            let url ="http://localhost:5000/applandproyects/us-central1/api/project/"
-            //url = url+project.id
+            let url =`http://localhost:5000/applandproyects/us-central1/api/project/${projectId}`
             let { data } = await axios.get(url
                 );
                 if (data.success ){
@@ -27,8 +29,6 @@ class ProjectsForm extends Component {
                     this.state={
                         Data2:data.data
                     }
-                               //this.state.Data2:data.data
-
                 }
                 else{
                     console.log('error ');
@@ -46,115 +46,15 @@ class ProjectsForm extends Component {
     */
     render(){
         //const {onChange , form}=this.props
+        // mostraria 9999
         return (
             <div className="container">
                 <form 
                     onSubmit={this.handleSubmit}
                     >
-                    {/*                 
-                    <div className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="title" 
-                            name="title"
-                            onChange={onChange}
-                            value={form.title}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="author" 
-                            name="author"
-                            onChange={onChange}
-                            value={form.author}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="category" 
-                            name="category"
-                            onChange={onChange}
-                            value={form.category}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input 
-                            type="date" 
-                            className="form-control" 
-                            placeholder="date" 
-                            name="date"
-                            onChange={onChange}
-                            value={form.date}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="type" 
-                            name="type"
-                            onChange={onChange}
-                            value={form.type}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="description" 
-                            name="description"
-                            onChange={onChange}
-                            value={form.description}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="img" 
-                            name="img"
-                            onChange={onChange}
-                            value={form.img}
-                        />
-                    </div>
-                    <div className="form-row">
-                        <div className="col">
-                            <input 
-                                type="text" 
-                                className="form-control" 
-                                placeholder="longCategory" 
-                                name="longCategory"
-                                onChange={onChange}
-                                value={form.longCategory}
-                            />
-                        </div>
-                        <div className="col">
-                            <input 
-                                type="text" 
-                                className="form-control"
-                                placeholder="keyWords" 
-                                name="keyWords"
-                                onChange={onChange}
-                                value={form.keyWords}
-                            />    
-                        </div>
-                    </div>
-                    
-                    <button 
-                        type="submit" 
-                        className="btn btn-primary"
-                    >
-                        Submit
-                    </button>
-                */}
                 </form>
                 <form className="ml-10" >
-                    <div className="md:flex w-full max-sm">
+                    <div  className="md:flex w-full max-sm">
                         <div className="w-16 h-16 mt-2 mb-1">
                             <div className="">
                             <img src="https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2F350-512.png?alt=media&token=0c5119c5-9b91-452b-8b73-d1dba2cf44e7" className="border-1 border-gray-200 w-60  mr-4"  alt=" "></img>
@@ -276,7 +176,7 @@ class ProjectsForm extends Component {
     }
 }
 
-export default ProjectsForm
+export default ProjectsDetails
 
 /* import React from 'react';
 import PropTypes from 'prop-types';

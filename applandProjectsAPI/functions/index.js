@@ -52,6 +52,7 @@ app.get('/types',(req, res)=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post('/projects',async(req, res) =>{
   const { name, author, category, date, type, description, longDescription, keyWords} = req.body;
+
   try {
     const docRef = await db.collection('projects').add({
       name, 
@@ -77,11 +78,12 @@ app.post('/projects',async(req, res) =>{
   }
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get('/projects/:idProject',async(req, res)=>{
+app.get('/projects/:idAuthor',async(req, res)=>{
+  console.log(req.params.id)
   try {
     let data=[]
-    const projectsRef = db.collection('projects');
-    const docSnap = await projectsRef.where('category',"==" , req.params.idAuthor).get();
+    let projectsRef = db.collection('projects');
+    const docSnap = await projectsRef.where('author',"==" , req.params.idAuthor).get();
     const projects = docSnap.docs.forEach(  doc=> {
       data.push({
         id: doc.id ,
@@ -90,13 +92,39 @@ app.get('/projects/:idProject',async(req, res)=>{
   });
   res.status(201).json({
     success: true,
-    data:Data ,
+    data:data ,
     message:'datos obtenidos correctamente'
 });
 } catch (error) {
   res.status(500).json({
     success: false,
-    data:[] ,
+    data:error ,
+    message:'Error al obtener datos '
+  });
+}
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/project/:idProject',async(req, res)=>{
+  console.log(req.params.id)
+  try {
+    let data=[]
+    let projectsRef = db.collection('projects');
+    const docSnap = await projectsRef.where('id',"==" , req.params.idProject).get();
+    const projects = docSnap.docs.forEach(  doc=> {
+      data.push({
+        id: doc.id ,
+          ...doc.data()
+      })
+  });
+  res.status(201).json({
+    success: true,
+    data:data ,
+    message:'datos obtenidos correctamente'
+});
+} catch (error) {
+  res.status(500).json({
+    success: false,
+    data:error ,
     message:'Error al obtener datos '
   });
 }

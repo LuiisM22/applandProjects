@@ -8,7 +8,7 @@ const Projects =({ project })=>(
             project.map((project)=> (
                     <Card 
                     className="h-auto w-auto ml-2 mr-2"
-                    key={project.id}
+                    id={project.id}
                     title={project.name}
                     description={project.description}
                     img={project.img}
