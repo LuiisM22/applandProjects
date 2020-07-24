@@ -11,40 +11,35 @@ const NewProjects =(props)=>(
 export default NewProjects
 import React from 'react' */
 
-const ProjectsDetails = (
-        if (props) {
-            props = state['']
-        } else {
-            props=this.props
-        }))=>{  
-        const [state]=useState({
-            id:props.location.data.id,
-            img:props.location.data.img,
-            title:props.location.data.name,
-            author:props.location.data.author,
-            category:props.location.data.category,
-            date:props.location.data.date,
-            type:props.location.data.type,
-            description:props.location.data.description,
-            qualification:props.location.data.qualification,
-            authorDescription:props.location.data.authorDescription,
-            longDescription:props.location.data.longDescription,
-            keyWords:props.location.data.keyWords
-        })
-       /*  const [state]=useState({
-            id:this.id,
-            img:this.img,
-            title:this.name,
-            author:this.author,
-            category:this.category,
-            date:this.date,
-            type:this.type,
-            description:this.description,
-            qualification:this.qualification,
-            authorDescription:this.authorDescription,
-            longDescription:this.longDescription,
-            keyWords:this.keyWords
-      }) */
+const ProjectsDetails = (props)=>{  
+    const [state]=useState({
+        id:props.location.data.id,
+        img:props.location.data.img,
+        title:props.location.data.name,
+        author:props.location.data.author,
+        category:props.location.data.category,
+        date:props.location.data.date,
+        type:props.location.data.type,
+        description:props.location.data.description,
+        qualification:props.location.data.qualification,
+        authorDescription:props.location.data.authorDescription,
+        longDescription:props.location.data.longDescription,
+        keyWords:props.location.data.keyWords
+    })
+    /*  const [state]=useState({
+        id:this.id,
+        img:this.img,
+        title:this.name,
+        author:this.author,
+        category:this.category,
+        date:this.date,
+        type:this.type,
+        description:this.description,
+        qualification:this.qualification,
+        authorDescription:this.authorDescription,
+        longDescription:this.longDescription,
+        keyWords:this.keyWords
+    }) */
         const {id}= useParams()
     const handleSubmit = e => {
         e.preventDefault()
