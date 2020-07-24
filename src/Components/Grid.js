@@ -15,7 +15,7 @@ export class Grid extends Component {
             let {data}  = await axios.get(
                 'http://localhost:5000/applandproyects/us-central1/api/projects',
                 );
-                console.log(data.data);
+                //console.log(data.data);
                 if (data.success ){
 
                     this.setState({
@@ -29,7 +29,6 @@ export class Grid extends Component {
             console.log(error);   
         }
     }
-    
     componentDidMount(){
     this.getData()
     }

@@ -34,7 +34,7 @@ export class NavT extends Component {
       return(
         <div>
           <link rel="stylesheet" href="../../build/tailwind.css" ></link>
-          <nav className="flex items-center justify-between flex-wrap bg-gray-700 p-3">
+          <nav className="flex items-center justify-between flex-wrap bg-gray-700 p-1">
             <div className="flex items-center flex-shrink-0 text-white mr-6">
               <a href="/"  className="font-semibold text-xl tracking-tight">Appland Projects</a>
             </div>

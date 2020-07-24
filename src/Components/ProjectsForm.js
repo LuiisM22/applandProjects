@@ -163,17 +163,17 @@ class ProjectsForm extends Component {
                         <div className=" md:w-100 " >
                             <div className="md:flex md:items-left mt-2 mb-1">
                                 <div className="md:w-3/5">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" for="inline-full-name">
+                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" htmlFor="inline-full-name">
                                         Nombre del Proyecto
                                     </label>
                                 </div>
                                 <div className="md:w-3/4">
-                                    <label className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"  id="inline-full-name" type="text" placeholder="Nombre"/>
+                                    <input className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"  id="inline-full-name" type="text" placeholder="Nombre"/>
                                 </div>
                             </div>
                             <div className="md:flex md:items-center mb-1">
                                 <div className="md:w-3/5">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" for="inline-full-name">
+                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" htmlFor="inline-full-name">
                                         Autor
                                     </label>
                                 </div>
@@ -183,7 +183,7 @@ class ProjectsForm extends Component {
                             </div>
                             <div className="md:flex md:items-center mb-1">
                                 <div className="md:w-3/5">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" for="inline-full-name">
+                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" htmlFor="inline-full-name">
                                         Categoría
                                     </label>
                                 </div>
@@ -193,7 +193,7 @@ class ProjectsForm extends Component {
                             </div>
                             <div className="md:flex md:items-center mb-1">
                                 <div className="md:w-3/5">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" for="inline-full-name">
+                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" htmlFor="inline-full-name">
                                         Fecha de  Creación   
                                     </label>
                                 </div>
@@ -203,7 +203,7 @@ class ProjectsForm extends Component {
                             </div>
                             <div className="md:flex md:items-center mb-1">
                                 <div className="md:w-3/5">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" for="inline-full-name">
+                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" htmlFor="inline-full-name">
                                         Tipo
                                     </label>
                                 </div>
@@ -213,7 +213,7 @@ class ProjectsForm extends Component {
                             </div>
                             <div className="md:flex md:items-center mb-1">
                                 <div className="md:w-3/5">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" for="inline-full-name">
+                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" htmlFor="inline-full-name">
                                         Descripción
                                     </label>
                                 </div>
@@ -245,7 +245,7 @@ class ProjectsForm extends Component {
                     </div>
                         <div className=" md:items-center mb-1">
                             <div className="md:w-3/5">
-                                <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1" for="inline-full-name">
+                                <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1" htmlFor="inline-full-name">
                                     Acerca del Autor
                                 </label>
                             </div>
@@ -255,7 +255,7 @@ class ProjectsForm extends Component {
                         </div>
                     <div className="md:items-left mb-1">
                         <div className="md:w-3/5">
-                            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1" for="inline-full-name">
+                            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1" htmlFor="inline-full-name">
                                 Descripción Completa
                             </label>
                         </div>
