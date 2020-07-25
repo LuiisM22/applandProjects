@@ -16,8 +16,7 @@ export class Grid extends Component {
                 'http://localhost:5000/applandproyects/us-central1/api/projects',
                 );
                 //console.log(data.data);
-                if (data.success ){
-
+                if (data.success ){                    
                     this.setState({
                         Data2 : data.data
                     });

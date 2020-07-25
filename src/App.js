@@ -7,7 +7,7 @@ import {BrowserRouter, Route, Switch } from 'react-router-dom'
 import NewProjects from './Components/NewProjects'
 import ProjectsDetails from './Components/ProjectsDetails'
 import NotFound from './Components/NotFound'
-import Details from './Components/Details';
+//import Details from './Components/Details';
 //import Reutilizable from './Components/Reutilizable'
 //import {Card} from './Components/Card'
 

@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
-import Details from './Details';
-import { Link } from 'react-router-dom';
-import axios from "axios";
+//import Details from './Details';
+//import { Link } from 'react-router-dom';
+//import axios from "axios";
 //import { useHistory } from "react-router-dom";
 
 export class Card extends Component {
@@ -9,7 +9,7 @@ export class Card extends Component {
   constructor (props){
     //const {title, author, category, description, qualification, img,date, i }=props
   super(props)
-  this.getData= this.getData.bind(this)
+  //this.getData= this.getData.bind(this)
   this.setState={
       data:[
         this.id=props.id,
@@ -28,7 +28,7 @@ export class Card extends Component {
     //route.push(`/ProjectDetails`);
     //console.log(id)
   }
-  async getData(){
+ /*  async getData(){
     try {
         let ide =this.id.bind(this)
         console.log(ide);
@@ -46,7 +46,7 @@ export class Card extends Component {
     } catch (error) {
         console.log(error);   
     }
-}
+} */
 
  /*  _handleClick(id) {
     route.push(`/ProjectDetails/${id}`);
