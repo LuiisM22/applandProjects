@@ -73,21 +73,16 @@ async function getAll(collections, req, res) {
     });
   }
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/projects", (req, res) => {
   getAll("projects", req, res);
 });
-////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get("/categories22", (req, res) => {
-  getAll("categories", req, res);
-});
-
+///////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/category", async (req, res) =>{
     try {
       const { id } = req.body;
-      
       const docRef = await db.collection("categories").doc(id).get();
-      console.log(docRef.data());
+      //console.log(docRef.data());
       res.status(201).json({
         success: true,
         data: {
@@ -97,17 +92,66 @@ app.post("/category", async (req, res) =>{
         message: "datos obtenidos correctamente",
       });
     } catch (error) {
-      console.log(error.message);
+      res.status(500).json({
+      success: false,
+      data: [],
+      error,
+      })
+      console.log(error.message)
+    }}
+);
+///////////////////////////////////////////////////////////////////////////////////////////////////
+app.post("/type", async (req, res) =>{
+    try {
+      const { id } = req.body;
+      const docRef = await db.collection("types").doc(id).get();
+      //console.log(docRef.data());
+      res.status(201).json({
+        success: true,
+        data: {
+          id,
+          ...docRef.data(),
+        },
+        message: "datos obtenidos correctamente",
+      });
+    } catch (error) {
+      res.status(500).json({
+      success: false,
+      data: [],
+      error,
+      })
+      console.log(error.message)
+    }}
+);
+///////////////////////////////////////////////////////////////////////////////////////////////////
+app.post("/user", async (req, res) =>{
+    try {
+      const { id } = req.body;
+      const docRef = await db.collection("users").doc(id).get();
+      //console.log(docRef.data());
+      res.status(201).json({
+        success: true,
+        data: {
+          id,
+          ...docRef.data(),
+        },
+        message: "datos obtenidos correctamente",
+      });
+    } catch (error) {
+      res.status(500).json({
+      success: false,
+      data: [],
+      error,
+      })
+      console.log(error.message)
     }}
 );
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get("/types", (req, res) => {
-  getAll("types", req, res);
-});
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/projects", async (req, res) => {
   const {
-    name,
+    title,
     author,
     category,
     date,
@@ -119,7 +163,7 @@ app.post("/projects", async (req, res) => {
 
   try {
     const docRef = await db.collection("projects").add({
-      name,
+      title,
       author,
       category,
       date,

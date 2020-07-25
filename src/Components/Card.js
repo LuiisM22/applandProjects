@@ -53,14 +53,14 @@ export class Card extends Component {
   } */
 
   render(){
-    const {id, author, category, description, qualification, img}=this.props
+    const {title, author, category, description, qualification, img}=this.props
     return(
       <form action="{/ProjectDetails}" method="post">
         <div  /* onClick= {(event) =>  {this._handleClick(id,event)}} */ className=" md:flex bg-gray-400  w-1/4 max-w-sm w-full lg:max-w-full lg:flex">
           <div className="h-15 lg:h-auto lg:w-15 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center " style={{'backgroundImage':'gs://applandproyects.appspot.com/src/img/cardl.jpg '}} alt="d" />
           <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
             <div >
-              <div  className="text-gray-900 font-bold text-xl mb-2">Titulo: {id}</div>
+              <div  className="text-gray-900 font-bold text-xl mb-2">Titulo: {title}</div>
               <img className="h-10 lg:h-auto lg:w-10 flex-none"  src={img} alt='' />
               <p className="text-gray-700 text-base leading-none">Autor: {author}</p>
               <p className="text-gray-700 text-base leading-none">Categoria: {category}</p>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-//import {useParams} from 'react-router-dom'
+//import { useParams } from "react-router-dom";
 
 /* 
 const NewProjects =(props)=>(
@@ -17,11 +17,11 @@ const ProjectsDetails = (props) => {
   const [state, setState] = useState({
     id: props.location.data.id,
     img: props.location.data.img,
-    title: props.location.data.name,
-    author: props.location.data.author,
+    title: props.location.data.title,
+    author: {id: props.location.data.author , name: "" },
     category: { id: props.location.data.category, name: "" },
     date: props.location.data.date,
-    type: props.location.data.type,
+    type: {id: props.location.data.type, name: "" },
     description: props.location.data.description,
     qualification: props.location.data.qualification,
     authorDescription: props.location.data.authorDescription,
@@ -44,18 +44,16 @@ const ProjectsDetails = (props) => {
     }) */
 
   useEffect(() => {
-    const getData = async (query) => {
-      console.log("antes de try");
+    const getDataCategory = async (query) => {
       try {
         if (!state.category.name) {
-            console.log('destepues ');
-          let {
-            data,
-          } = await axios.post(
-            "http://localhost:5000/applandproyects/us-central1/api/category",
-            { id: state.category.id }
-          );
-          console.log("data", data.data);
+        let {
+          data,
+        } = await axios.post(
+          "http://localhost:5000/applandproyects/us-central1/api/category",
+          { id: state.category.id }
+        );
+            //console.log("dataCategory", data);
           setState((prevState) => ({
             ...prevState,
             category: { name: data.data.name, id: data.data.id },
@@ -65,8 +63,49 @@ const ProjectsDetails = (props) => {
         console.log(error);
       }
     };
-    getData();
-  }, [state.category]);
+    const getDataAuthor = async (query) => {
+        try {
+          if (!state.author.name) {
+          let {
+            data,
+          } = await axios.post(
+            "http://localhost:5000/applandproyects/us-central1/api/user",
+            { id: state.author.id }
+          );
+              //console.log("dataUser", data);
+            setState((prevState) => ({
+              ...prevState,
+              author: { name: data.data.name, id: data.data.id },
+            }));
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    const getDataType = async (query) => {
+    try {
+        if (!state.type.name) {
+        let {
+        data,
+        } = await axios.post(
+        "http://localhost:5000/applandproyects/us-central1/api/type",
+        { id: state.type.id }
+        );
+            //console.log("dataType", data);
+        setState((prevState) => ({
+            ...prevState,
+            type: { name: data.data.name, id: data.data.id },
+        }));
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    };
+      
+      getDataAuthor();
+      getDataType();
+      getDataCategory();
+  }, [ state.category, state.author, state.type]);
   //const {id}= useParams()
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -86,7 +125,7 @@ const ProjectsDetails = (props) => {
     longDescription,
     keyWords,
   } = state;
-  console.log(state);
+  //console.log(state);
   return (
     <div className="container">
       <form onSubmit={handleSubmit}></form>
@@ -131,7 +170,7 @@ const ProjectsDetails = (props) => {
                   id="inline-full-name"
                   placeholder="Autor"
                 >
-                  {author}
+                  {author.name}
                   {/* Este es el Autor del proyecto */}
                 </label>
               </div>
@@ -181,7 +220,7 @@ const ProjectsDetails = (props) => {
                   id="inline-full-name"
                   placeholder="Tipo"
                 >
-                  {type}
+                  {type.name}
                   {/* Este es el Tipo del proyecto */}
                 </label>
               </div>
