@@ -28,20 +28,6 @@ const ProjectsDetails = (props) => {
     longDescription: props.location.data.longDescription,
     keyWords: props.location.data.keyWords,
   });
-  /*  const [state]=useState({
-        id:this.id,
-        img:this.img,
-        title:this.name,
-        author:this.author,
-        category:this.category,
-        date:this.date,
-        type:this.type,
-        description:this.description,
-        qualification:this.qualification,
-        authorDescription:this.authorDescription,
-        longDescription:this.longDescription,
-        keyWords:this.keyWords
-    }) */
 
   useEffect(() => {
     const getDataCategory = async (query) => {
@@ -106,10 +92,8 @@ const ProjectsDetails = (props) => {
       getDataType();
       getDataCategory();
   }, [ state.category, state.author, state.type]);
-  //const {id}= useParams()
   const handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(state)
   };
 
   const {
@@ -323,12 +307,12 @@ const ProjectsDetails = (props) => {
       </form>
       <div className=" pt-5 ml-10 md:items-right">
         <div className="md:w-2/3">
-          <button
+{/*           <button
             className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
             type="button"
           >
             Guardar
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

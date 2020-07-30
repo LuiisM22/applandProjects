@@ -3,8 +3,7 @@ import {Card} from './Card.js';
 import {Link } from 'react-router-dom';
 //import axios from "axios";
 const Projects =({ project })=>(
-    <div>
-        <div className="flex ml-4 mt-4 mr-4 mb-4 animated fadeIn Low">   
+        <main className=" animated fadeIn Low">   
         {
             project.map((project)=> (
                 <Link 
@@ -16,7 +15,6 @@ const Projects =({ project })=>(
                 >
                     <Card 
                     key={project.id}
-                    className="h-auto w-auto ml-2 mr-2"
                     id={project.id}
                     title={project.title}
                     description={project.description}
@@ -48,9 +46,7 @@ const Projects =({ project })=>(
                         qualification={project.qualification}  
                     />      
                 </Link> */
-
             }    
-        </div>
-</div> 
+        </main>
 )
 export default Projects;

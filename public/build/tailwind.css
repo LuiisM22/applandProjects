@@ -28,8 +28,13 @@ body {
  * Render the `main` element consistently in IE.
  */
 
-main {
-  display: block;
+ main {
+  /* height: 100vh; */
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, 350px);
+  /* grid-template-rows: 1fr 1fr 1fr ; */
+  justify-content:center;
 }
 
 /**

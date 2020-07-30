@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
 //import Details from './Details';
 //import { Link } from 'react-router-dom';
-//import axios from "axios";
+import axios from "axios";
 //import { useHistory } from "react-router-dom";
 
 export class Card extends Component {
@@ -28,25 +28,64 @@ export class Card extends Component {
     //route.push(`/ProjectDetails`);
     //console.log(id)
   }
- /*  async getData(){
+  async getDataCategory() {
     try {
-        let ide =this.id.bind(this)
-        console.log(ide);
-        let {data}  = await axios.get(
-            `http://localhost:5000/applandproyects/us-central1/api/projectById/${ide}`,
-            );
-            if (data.success ){
-                this.setState({
-                  Data2: data.data.bind(this)
-                })
-            }
-            else{
-                console.log('error ');
-            }
+      if (!this.state.category.name) {
+      let {
+        data,
+      } = await axios.post(
+        "http://localhost:5000/applandproyects/us-central1/api/category",
+        { id: this.state.category.id }
+      );
+          //console.log("dataCategory", data);
+          this.setState((prevState) => ({
+          ...prevState,
+          category: { name: data.data.name, id: data.data.id },
+        }));
+      }
     } catch (error) {
-        console.log(error);   
+      console.log(error);
     }
-} */
+  };
+  async getDataAuthor() {
+      try {
+        if (!this.state.author.name) {
+        let {
+          data,
+        } = await axios.post(
+          "http://localhost:5000/applandproyects/us-central1/api/user",
+          { id: this.state.author.id }
+        );
+            //console.log("dataUser", data);
+            this.setState((prevState) => ({
+            ...prevState,
+            author: { name: data.data.name, id: data.data.id },
+          }));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  async getDataType(){
+  try {
+      if (!this.state.type.name) {
+      let {
+      data,
+      } = await axios.post(
+      "http://localhost:5000/applandproyects/us-central1/api/type",
+      { id: this.state.type.id }
+      );
+          //console.log("dataType", data);
+          this.setState((prevState) => ({
+          ...prevState,
+          type: { name: data.data.name, id: data.data.id },
+      }));
+      }
+  } catch (error) {
+      console.log(error);
+  }
+  };
+    
 
  /*  _handleClick(id) {
     route.push(`/ProjectDetails/${id}`);
@@ -55,10 +94,8 @@ export class Card extends Component {
   render(){
     const {title, author, category, description, qualification, img}=this.props
     return(
-      <form action="{/ProjectDetails}" method="post">
-        <div  /* onClick= {(event) =>  {this._handleClick(id,event)}} */ className=" md:flex bg-gray-400  w-1/4 max-w-sm w-full lg:max-w-full lg:flex">
-          <div className="h-15 lg:h-auto lg:w-15 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center " style={{'backgroundImage':'gs://applandproyects.appspot.com/src/img/cardl.jpg '}} alt="d" />
-          <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+      <form action="{/ProjectDetails}" method="post">   
+          <div className="border-r border-b border-t border-l border-gray-400 lg:border-l lg:border-t lg:border-gray-400 bg-white lg:rounded-t-lg lg:rounded-b-lg p-4 flex flex-col justify-between leading-normal">
             <div >
               <div  className="text-gray-900 font-bold text-xl mb-2">Titulo: {title}</div>
               <img className="h-10 lg:h-auto lg:w-10 flex-none"  src={img} alt='' />
@@ -72,7 +109,6 @@ export class Card extends Component {
               </div>
             </div>
           </div>
-        </div>
       </form>
     );
     }
