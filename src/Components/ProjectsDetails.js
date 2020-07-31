@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-//import { useParams } from "react-router-dom";
+import Loader from 'react-loader-spinner'
 
 /* 
 const NewProjects =(props)=>(
@@ -12,7 +12,7 @@ const NewProjects =(props)=>(
 )
 export default NewProjects
 import React from 'react' */
-
+//state = { loading: true };
 const ProjectsDetails = (props) => {
   const [state, setState] = useState({
     id: props.location.data.id,
@@ -109,9 +109,9 @@ const ProjectsDetails = (props) => {
     longDescription,
     keyWords,
   } = state;
-  //console.log(state);
   return (
     <div className="container">
+      <Loader type="Grid" color="#00BFFF" height={80} width={80} />
       <form onSubmit={handleSubmit}></form>
       <form className="ml-10">
         <div className="md:flex w-full max-sm">
@@ -138,7 +138,6 @@ const ProjectsDetails = (props) => {
                   placeholder="Nombre"
                 >
                   {title}
-                  {/* Este es el Nombre del proyecto asd fasdf ads asdf adf asdfadfaadsf asadfa asd fasdf ads asdf adf asdfadfaadsf asadfa  */}
                 </label>
               </div>
             </div>

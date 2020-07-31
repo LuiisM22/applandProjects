@@ -70,9 +70,9 @@ export class NavT extends Component {
               <form onSubmit={this._handleSubmit}>
                 <div className=" md:flex w-auto">
                   <input 
-                  //onChange={this._handleChange}
+                  onChange={this._handleChange}
                   className="mx-0 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4  appearance-none leading-normal" type="text" placeholder="Buscar"></input>
-                  <button onClick={this._handleSubmit} className="mx-1 lg:inline-block mt-1000 text-sm px-4 py-2 leading-none border rounded text-white border-white block hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Buscar</button>
+                  <button onClick={this._handleSubmit} className="mx-1 lg:inlinde-block mt-1000 text-sm px-4 py-2 leading-none border rounded text-white border-white block hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Buscar</button>
                 </div>
               </form>
                   <button onClick={this.Login} className="mx-3 lg:inline-block  z-10 block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white">

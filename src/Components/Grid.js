@@ -2,11 +2,13 @@ import React , { Component } from 'react';
 import Projects from './Projects'
 import axios from "axios";
 export class Grid extends Component {
+    state = {};
     constructor (props){
         super(props)
         this.state={
             Data2:[]
         }
+        this.getData()
        // this.getData= this.getData.bind(this)
     }
 
@@ -27,9 +29,6 @@ export class Grid extends Component {
         } catch (error) {
             console.log(error);   
         }
-    }
-    componentDidMount(){
-    this.getData()
     }
     render(){
         return(

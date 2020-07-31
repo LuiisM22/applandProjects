@@ -24,17 +24,43 @@ body {
   margin: 0;
 }
 
+form {
+  margin-bottom: 0;
+}
+
+
 /**
  * Render the `main` element consistently in IE.
  */
-
- main {
-  /* height: 100vh; */
-  display: grid;
-  gap: 8px;
-  grid-template-columns: repeat(3, 350px);
-  /* grid-template-rows: 1fr 1fr 1fr ; */
-  justify-content:center;
+@media (max-width: 700px){
+  main {
+    /* height: 100vh; */
+    display: grid;
+    gap: 4px;
+    grid-template-columns: repeat(1, 350px);
+    grid-template-rows: 1fr ;
+    justify-content:center;
+  }
+}
+@media (min-width: 875px){
+  main {
+    /* height: 100vh; */
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, 350px);
+    grid-template-rows: 1fr ;
+    justify-content:center;
+  }
+}
+@media (min-width: 1225px){
+  main {
+    /* height: 100vh; */
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(3, 350px);
+    grid-template-rows: 1fr ;
+    justify-content:center;
+  }
 }
 
 /**
@@ -608,7 +634,7 @@ video {
   width: 100%;
 }
 
-@media (min-width: 640px) {
+mar (min-width: 640px) {
   .container {
     max-width: 640px;
   }
