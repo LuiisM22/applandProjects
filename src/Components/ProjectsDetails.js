@@ -15,6 +15,7 @@ const ProjectsDetails = (props) => {
     longDescription: props.location.data.longDescription,
     keyWords: props.location.data.keyWords,
   });
+  console.log(props.location.data);
   useEffect(() => {
     const getDataCategory = async (query) => {
       try {

@@ -33,7 +33,7 @@ export class Grid extends Component {
   }
   render() {
     return (
-      <div className="h:100% pt-5 ml-20 mr-20 bg-gray-400">
+      <div className="h:100% pb-5 pt-5 ml-20 mr-20 bg-gray-400">
         {/* <Loader className=" ml-20 absolute items-center z-10 "  type="Grid" color="#00BFFF" height={200} width={200} />        */}
         <Projects project={this.state.Data2} />
       </div>

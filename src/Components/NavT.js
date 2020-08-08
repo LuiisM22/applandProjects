@@ -1,14 +1,19 @@
 import React, { Component } from "react";
-import SimpleModal from "./modal"
+import SimpleModal from "./modal";
+import PropTypes from "prop-types";
 //import 'firebase/auth';
 //import { useFirebaseApp } from 'firebase-functions';
-import firebase from 'firebase';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from "firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 firebase.initializeApp({
   apiKey: "AIzaSyAauRcZVPtFCEUKS8eKdPXxv2N0WpuFoSc",
-  authDomain: "applandproyects.firebaseapp.com"
-})
+  authDomain: "applandproyects.firebaseapp.com",
+});
 
+SimpleModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+};
 export class NavT extends Component {
   //firebase = useFirebaseApp();
   //this.state.photo = this.state.photo.bind(this)
@@ -24,21 +29,29 @@ export class NavT extends Component {
     //this.getData= this.getData.bind(this)
   }
     */
+
   state = {
     inputSearch: "",
-    isSignedIn:false,
-    photo:"https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2FNoProfile.jpg?alt=media&token=e11b597b-cfd8-4675-b263-f810a9bcb902"
+    isSignedIn: false,
+    photo:
+      "https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2FNoProfile.jpg?alt=media&token=e11b597b-cfd8-4675-b263-f810a9bcb902",
+    show: false,
+  };
+  showModal = (e) => {
+    this.setState({
+      show: !this.state.show,
+    });
   };
   uiConfig = {
-    signInFlow : "popup",
+    signInFlow: "popup",
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     ],
     callbacks: {
-      signInSuccess: () => false
-    }
-  }
+      signInSuccess: () => false,
+    },
+  };
   _handleChange = (e) => {
     this.setState({ inputSearch: e.target.value });
   };
@@ -52,26 +65,24 @@ export class NavT extends Component {
     //console.log(this.state.inputSearch);
     //this.firebase.auth.g
   };
-/*     Login(){
+  /*     Login(){
     const provider = new this.firebase.auth.GoogleAuthProvider();
     this.firebase.auth().signInWithPopup(provider).then(result=>{
     console.log(result);
     auth.signInWithPopup()  
     console.log('clicked');
   } */
-  componentDidMount = () =>{
-    firebase.auth().onAuthStateChanged(user =>{
-      this.setState({isSignedIn:!!user})
-      this.setState({photo:firebase.auth().currentUser.photoURL})
-        if (!firebase.auth().currentUser.photoURL){
-          this.setState({photo:this.photo})
-        }
-        else
-        {
-          this.setState({photo:firebase.auth().currentUser.photoURL})
-        }
-    })
-  }
+  componentDidMount = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.setState({ isSignedIn: !!user });
+      this.setState({ photo: firebase.auth().currentUser.photoURL });
+      if (!firebase.auth().currentUser.photoURL) {
+        this.setState({ photo: this.photo });
+      } else {
+        this.setState({ photo: firebase.auth().currentUser.photoURL });
+      }
+    });
+  };
 
   data() {
     return {
@@ -95,7 +106,7 @@ export class NavT extends Component {
     return (
       <div>
         <link rel="stylesheet" href="../../build/tailwind.css"></link>
-        {this.state.isSignedIn ? (
+        {/* {this.state.isSignedIn ? (
           <div> 
             <div>Signed In</div>
             <button
@@ -111,8 +122,8 @@ export class NavT extends Component {
               firebaseAuth={firebase.auth()}
             />
           )
-        }
-      
+        } */}
+
         <nav className="flex items-center justify-between flex-wrap bg-gray-700 p-1">
           <div className="flex items-center flex-shrink-0 text-white mr-6">
             <a href="/" className="font-semibold text-xl tracking-tight">
@@ -151,20 +162,37 @@ export class NavT extends Component {
               </div>
             </form>
             <button
-             /*  onClick={this.Login} */
+              /*  onClick={this.Login} */
+              onClick={(e) => {
+                this.showModal();
+              }}
+              //id="centered-toggle-button"
               type="button"
               id="googleLogin"
               className="mx-3 lg:inline-block  z-10 block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white"
             >
-              <SimpleModal img={this.state.photo}/>
-{/*               <img
+              <img
                 className="h-full w-full object-cover"
                 src={this.state.photo}
                 alt=""
-              /> */}
+              />
             </button>
           </div>
         </nav>
+        <SimpleModal onClose={this.showModal} show={this.state.show}>
+          {this.state.isSignedIn ? (
+            <div>
+              <div>Signed In</div>
+              <button onClick={() => firebase.auth().signOut()}>signOut</button>
+              <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
+            </div>
+          ) : (
+            <StyledFirebaseAuth
+              uiConfig={this.uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
+          )}
+        </SimpleModal>
       </div>
     );
   }
