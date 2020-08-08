@@ -1,45 +1,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Loader from 'react-loader-spinner'
-
-/* 
-const NewProjects =(props)=>(
-    <div className="flex mb-4 animated fadeIn Low">
-        {
-            <h1>Crear un Nuevo Proyecto</h1>
-        }
-    </div>
-)
-export default NewProjects
-import React from 'react' */
-//state = { loading: true };
 const ProjectsDetails = (props) => {
   const [state, setState] = useState({
     id: props.location.data.id,
     img: props.location.data.img,
     title: props.location.data.title,
-    author: {id: props.location.data.author , name: "" },
+    author: { id: props.location.data.author, name: "" },
     category: { id: props.location.data.category, name: "" },
     date: props.location.data.date,
-    type: {id: props.location.data.type, name: "" },
+    type: { id: props.location.data.type, name: "" },
     description: props.location.data.description,
     qualification: props.location.data.qualification,
     authorDescription: props.location.data.authorDescription,
     longDescription: props.location.data.longDescription,
     keyWords: props.location.data.keyWords,
   });
-
   useEffect(() => {
     const getDataCategory = async (query) => {
       try {
         if (!state.category.name) {
-        let {
-          data,
-        } = await axios.post(
-          "http://localhost:5000/applandproyects/us-central1/api/category",
-          { id: state.category.id }
-        );
-            //console.log("dataCategory", data);
+          let {
+            data,
+          } = await axios.post(
+            "http://localhost:5000/applandproyects/us-central1/api/category",
+            { id: state.category.id }
+          );
+          //console.log("dataCategory", data);
           setState((prevState) => ({
             ...prevState,
             category: { name: data.data.name, id: data.data.id },
@@ -50,48 +36,47 @@ const ProjectsDetails = (props) => {
       }
     };
     const getDataAuthor = async (query) => {
-        try {
-          if (!state.author.name) {
+      try {
+        if (!state.author.name) {
           let {
             data,
           } = await axios.post(
             "http://localhost:5000/applandproyects/us-central1/api/user",
             { id: state.author.id }
           );
-              //console.log("dataUser", data);
-            setState((prevState) => ({
-              ...prevState,
-              author: { name: data.data.name, id: data.data.id },
-            }));
-          }
-        } catch (error) {
-          console.log(error);
+          //console.log("dataUser", data);
+          setState((prevState) => ({
+            ...prevState,
+            author: { name: data.data.name, id: data.data.id },
+          }));
         }
-      };
+      } catch (error) {
+        console.log(error);
+      }
+    };
     const getDataType = async (query) => {
-    try {
+      try {
         if (!state.type.name) {
-        let {
-        data,
-        } = await axios.post(
-        "http://localhost:5000/applandproyects/us-central1/api/type",
-        { id: state.type.id }
-        );
-            //console.log("dataType", data);
-        setState((prevState) => ({
+          let {
+            data,
+          } = await axios.post(
+            "http://localhost:5000/applandproyects/us-central1/api/type",
+            { id: state.type.id }
+          );
+          //console.log("dataType", data);
+          setState((prevState) => ({
             ...prevState,
             type: { name: data.data.name, id: data.data.id },
-        }));
+          }));
         }
-    } catch (error) {
+      } catch (error) {
         console.log(error);
-    }
+      }
     };
-      
-      getDataAuthor();
-      getDataType();
-      getDataCategory();
-  }, [ state.category, state.author, state.type]);
+    getDataAuthor();
+    getDataType();
+    getDataCategory();
+  }, [state.category, state.author, state.type]);
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -111,7 +96,6 @@ const ProjectsDetails = (props) => {
   } = state;
   return (
     <div className="container">
-      <Loader type="Grid" color="#00BFFF" height={80} width={80} />
       <form onSubmit={handleSubmit}></form>
       <form className="ml-10">
         <div className="md:flex w-full max-sm">
@@ -306,7 +290,7 @@ const ProjectsDetails = (props) => {
       </form>
       <div className=" pt-5 ml-10 md:items-right">
         <div className="md:w-2/3">
-{/*           <button
+          {/*           <button
             className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
             type="button"
           >

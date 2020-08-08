@@ -1,4 +1,5 @@
 const functions = require("firebase-functions");
+//const auth  = require("firebase-auth");
 const cors = require("cors");
 const admin = require("firebase-admin");
 const express = require("express");
@@ -23,33 +24,6 @@ app.use(
 app.use(bodyParser.json());
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 async function getAll(collections, req, res) {
-  /*try {
-    let data=[]
-    const collectionRef = db.collection(collections);
-    const docSnap = await collectionRef.get();
-    const collection = docSnap.docs.forEach(  (doc)=> {
-
-       const project  = doc.data();
-       var docRef = db.collection("categories").doc(`${project.category}`)
-      docRef.get().then((category)=> {
-        if(category.exists){
-          categoria= category.data()
-          data.push({
-            id: doc.id ,
-            ...doc.data()
-          })
-          return categoria
-        }else{
-          categoria = 1;
-          data.push({
-            id: doc.id ,
-            ...doc.data()
-          })
-          return categoria
-        }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-    }); */
   try {
     let data = [];
     const collectionRef = db.collection(collections);
@@ -78,75 +52,74 @@ app.get("/projects", (req, res) => {
   getAll("projects", req, res);
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-app.post("/category", async (req, res) =>{
-    try {
-      const { id } = req.body;
-      const docRef = await db.collection("categories").doc(id).get();
-      //console.log(docRef.data());
-      res.status(201).json({
-        success: true,
-        data: {
-          id,
-          ...docRef.data(),
-        },
-        message: "datos obtenidos correctamente",
-      });
-    } catch (error) {
-      res.status(500).json({
+app.post("/category", async (req, res) => {
+  try {
+    const { id } = req.body;
+    const docRef = await db.collection("categories").doc(id).get();
+    //console.log(docRef.data());
+    res.status(201).json({
+      success: true,
+      data: {
+        id,
+        ...docRef.data(),
+      },
+      message: "datos obtenidos correctamente",
+    });
+  } catch (error) {
+    res.status(500).json({
       success: false,
       data: [],
       error,
-      })
-      console.log(error.message)
-    }}
-);
+    });
+    console.log(error.message);
+  }
+});
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-app.post("/type", async (req, res) =>{
-    try {
-      const { id } = req.body;
-      const docRef = await db.collection("types").doc(id).get();
-      //console.log(docRef.data());
-      res.status(201).json({
-        success: true,
-        data: {
-          id,
-          ...docRef.data(),
-        },
-        message: "datos obtenidos correctamente",
-      });
-    } catch (error) {
-      res.status(500).json({
+app.post("/type", async (req, res) => {
+  try {
+    const { id } = req.body;
+    const docRef = await db.collection("types").doc(id).get();
+    //console.log(docRef.data());
+    res.status(201).json({
+      success: true,
+      data: {
+        id,
+        ...docRef.data(),
+      },
+      message: "datos obtenidos correctamente",
+    });
+  } catch (error) {
+    res.status(500).json({
       success: false,
       data: [],
       error,
-      })
-      console.log(error.message)
-    }}
-);
+    });
+    console.log(error.message);
+  }
+});
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-app.post("/user", async (req, res) =>{
-    try {
-      const { id } = req.body;
-      const docRef = await db.collection("users").doc(id).get();
-      //console.log(docRef.data());
-      res.status(201).json({
-        success: true,
-        data: {
-          id,
-          ...docRef.data(),
-        },
-        message: "datos obtenidos correctamente",
-      });
-    } catch (error) {
-      res.status(500).json({
+app.post("/user", async (req, res) => {
+  try {
+    const { id } = req.body;
+    const docRef = await db.collection("users").doc(id).get();
+    //console.log(docRef.data());
+    res.status(201).json({
+      success: true,
+      data: {
+        id,
+        ...docRef.data(),
+      },
+      message: "datos obtenidos correctamente",
+    });
+  } catch (error) {
+    res.status(500).json({
       success: false,
       data: [],
       error,
-      })
-      console.log(error.message)
-    }}
-);
-////////////////////////////////////////////////////////////////////////////////////////////////////
+    });
+    console.log(error.message);
+  }
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/projects", async (req, res) => {
@@ -242,6 +215,30 @@ app.get("/projectById/:idProject", async (req, res) => {
     });
   }
 });
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.post("/users", async (req, res) => {
+  const { firstName, lastName } = req.body;
+
+  try {
+    const docRef = await db.collection("users").add({
+      firstName,
+      lastName,
+    });
+    if (docRef) {
+      res.status(201).json({
+        success: true,
+        message: "se ha guardado correctamente",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "no se ha guardado correctamente",
+    });
+  }
+});
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
