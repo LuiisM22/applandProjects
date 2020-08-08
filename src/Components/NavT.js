@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import SimpleModal from "./modal";
+import SimpleModal from "./Modal";
 import PropTypes from "prop-types";
-//import 'firebase/auth';
-//import { useFirebaseApp } from 'firebase-functions';
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 firebase.initializeApp({
@@ -15,21 +13,6 @@ SimpleModal.propTypes = {
   show: PropTypes.bool.isRequired,
 };
 export class NavT extends Component {
-  //firebase = useFirebaseApp();
-  //this.state.photo = this.state.photo.bind(this)
-  /*    
-    constructor(props) {
-      super(props);
-    //Google Login
-    const googleButton = document.querySelector("#googleLogin");
-    googleButton.addEventListener('click', e =>{
-      console.log('click google');
-    })
-    
-    //this.getData= this.getData.bind(this)
-  }
-    */
-
   state = {
     inputSearch: "",
     isSignedIn: false,
@@ -106,24 +89,6 @@ export class NavT extends Component {
     return (
       <div>
         <link rel="stylesheet" href="../../build/tailwind.css"></link>
-        {/* {this.state.isSignedIn ? (
-          <div> 
-            <div>Signed In</div>
-            <button
-              onClick={ () => firebase.auth().signOut()}>
-                signOut
-            </button>
-            <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
-            </div>          
-          ):
-          (
-            <StyledFirebaseAuth
-              uiConfig={this.uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
-          )
-        } */}
-
         <nav className="flex items-center justify-between flex-wrap bg-gray-700 p-1">
           <div className="flex items-center flex-shrink-0 text-white mr-6">
             <a href="/" className="font-semibold text-xl tracking-tight">
@@ -182,9 +147,13 @@ export class NavT extends Component {
         <SimpleModal onClose={this.showModal} show={this.state.show}>
           {this.state.isSignedIn ? (
             <div>
-              <div>Signed In</div>
-              <button onClick={() => firebase.auth().signOut()}>signOut</button>
-              <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
+              {/* <div>Signed In</div> */}
+              <h1>{firebase.auth().currentUser.displayName}</h1>
+              <button 
+                              className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
+                onClick={() => firebase.auth().signOut()}
+              >
+              Cerrar Sesión</button>
             </div>
           ) : (
             <StyledFirebaseAuth

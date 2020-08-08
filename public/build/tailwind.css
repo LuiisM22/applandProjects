@@ -39,8 +39,9 @@ form {
 }
  */
 .modal {
-  width: 500px;
+  width: 350px;
   background: white;
+  align-items: center;
   border: 1px solid #ccc;
   transition: 1.1s ease-out;
   box-shadow: 
@@ -49,6 +50,7 @@ form {
   transform: scale(1);  
   opacity: 1;
   visibility: visible;
+  margin-left:50%;
 }
 .modal.off {
     opacity: 0;
@@ -76,14 +78,7 @@ form {
     border-top: 1px solid #ccc;
     background: #eee;
     padding: 0.5rem 1rem;
-    button {
-      border: 0;
-      background: #78f89f;
-      border-radius: 5px;
-      padding: 0.5rem 1rem;
-      font-size: 0.8rem;
-      line-height: 1;
-    }
+    padding-left:250px;
   }
 
 
