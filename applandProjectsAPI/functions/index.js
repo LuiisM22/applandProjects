@@ -216,6 +216,35 @@ app.get("/projectById/:idProject", async (req, res) => {
   }
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get("/comments/:idProject", async (req, res) => {
+  //console.log(req.params.idProject)
+  try {
+    let data = [];
+    let projectsRef = db.collection("comments");
+    const docSnap = await projectsRef.get();
+    //console.log(projectsRef);
+    docSnap.docs.forEach((doc) => {
+      data.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+    data2 = data.find((data1) => (data1.id = req.params.idProject));
+    console.log(data2);
+    res.status(201).json({
+      success: true,
+      data: data2,
+      message: "datos obtenidos correctamente",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      data: error,
+      message: "Error al obtener datos ",
+    });
+  }
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.post("/users", async (req, res) => {
   const { firstName, lastName } = req.body;
