@@ -98,6 +98,29 @@ app.post("/type", async (req, res) => {
   }
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+app.post("/projectByID", async (req, res) => {
+  try {
+    const { id } = req.body;
+    const docRef = await db.collection("projects").doc(id).get();
+    //console.log(docRef.data());
+    res.status(201).json({
+      success: true,
+      data: {
+        id,
+        ...docRef.data(),
+      },
+      message: "datos obtenidos correctamente",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      data: [],
+      error,
+    });
+    console.log(error.message);
+  }
+});
+///////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/user", async (req, res) => {
   try {
     const { id } = req.body;
@@ -187,7 +210,7 @@ app.get("/projectsByAuthor/:idAuthor", async (req, res) => {
   }
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get("/projectById/:idProject", async (req, res) => {
+app.get("/projectsById/:idProject", async (req, res) => {
   //console.log(req.params.idProject)
   try {
     let data = [];

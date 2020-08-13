@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 //import { useHistory } from "react-router-dom";
-const Card = (props) => {
+const Comment = (props) => {
   const [state, setState] = useState({
     id: props.data.id,
     img: props.data.img,
@@ -98,4 +98,4 @@ const Card = (props) => {
     </form>
   );
 };
-export default Card;
+export default Comment;

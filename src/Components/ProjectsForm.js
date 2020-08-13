@@ -6,9 +6,9 @@ const ProjectsForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    //setState({ [e.target.name]: e.target.value });
     console.log(state);
   };
-
   let data = qs.stringify({
     title: state.projectName,
     category: state.category,
@@ -22,9 +22,9 @@ const ProjectsForm = () => {
     let config = {
       method: "post",
       url: "http://localhost:5000/applandproyects/us-central1/api/projects",
-      headers: {
+/*       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-      },
+      }, */
       data: data,
     };
     axios(config)
@@ -35,7 +35,7 @@ const ProjectsForm = () => {
         console.log(error);
       });
   });
-  const handleChange = (e, data) => {
+  const handleChange = (e) => { 
     setState({ [e.target.name]: e.target.value });
   };
 
@@ -65,7 +65,7 @@ const ProjectsForm = () => {
                   className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                   placeholder="Nombre"
-                  required
+                   
                   name="name"
                   onChange={handleChange}
                   value={state.projectName}
@@ -84,7 +84,7 @@ const ProjectsForm = () => {
                     id="inline-full-name"
                     placeholder="Autor"
                     name="author"
-                    required
+                     
                     onChange={this.handleChange}
                     value={this.state.author}
                   ></input>
@@ -101,10 +101,10 @@ const ProjectsForm = () => {
                   className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                   placeholder="Categoría"
-                  required
+                   
                   name="category"
-                  onChange={handleChange}
-                  value={state.category}
+                  onChange={ handleChange}
+                  value={ state.category}
                 ></input>
               </div>
             </div>
@@ -119,10 +119,10 @@ const ProjectsForm = () => {
                   className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                   name="date"
-                  onChange={handleChange}
+                  onChange={ handleChange}
                   placeholder="Fecha"
-                  required
-                  value={state.date}
+                   
+                  value={ state.date}
                 ></input>
               </div>
             </div>
@@ -138,9 +138,9 @@ const ProjectsForm = () => {
                   id="inline-full-name"
                   placeholder="Tipo"
                   name="type"
-                  required
-                  onChange={handleChange}
-                  value={state.type}
+                   
+                  onChange={ handleChange}
+                  value={ state.type}
                 ></input>
               </div>
             </div>
@@ -155,10 +155,10 @@ const ProjectsForm = () => {
                   className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                   placeholder="Descripción"
-                  required
+                   
                   name="description"
-                  onChange={handleChange}
-                  value={state.description}
+                  onChange={ handleChange}
+                  value={ state.description}
                 ></input>
               </div>
             </div>
@@ -174,10 +174,10 @@ const ProjectsForm = () => {
             <input
               className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
               placeholder="Nombre"
-              required
+               
               name="authorDescription"
-              onChange={handleChange}
-              value={state.authorDescription}
+              onChange={ handleChange}
+              value={ state.authorDescription}
             ></input>
           </div>
         </div>
@@ -191,10 +191,10 @@ const ProjectsForm = () => {
             <input
               className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
               placeholder="Descripcion Completa"
-              required
+               
               name="longDescription"
               onChange={handleChange}
-              value={state.longDescription}
+              value={ state.longDescription}
             ></input>
           </div>
         </div>
@@ -208,10 +208,10 @@ const ProjectsForm = () => {
             <input
               className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
               placeholder="Palabras Clave"
-              required
+               
               name="keyWords"
-              onChange={handleChange}
-              value={state.keyWords}
+              onChange={ handleChange}
+              value={ state.keyWords}
             ></input>
           </div>
         </div>

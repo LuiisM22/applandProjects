@@ -18,7 +18,7 @@ class App extends Component {
             <Route exact path="/" component={Grid} />
             <Route exact path="/Create-Projects" component={NewProjects} />
             <Route
-              path="/ProjectsDetails"
+              path="/ProjectsDetails/:id"
               component={(props) => <ProjectsDetails {...props} />}
             ></Route>
             {/* <Route path="/Details/:idProject"  component={Details}></Route> */}

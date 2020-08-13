@@ -1,5 +1,339 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+//import Loader from 'react-loader-spinner'
+const ProjectsDetails = (props) => {
+  const getDataInf = async (query) => {
+    let projectId = props.match.params.id;
+    try {
+      if (!state.id) {
+        let {
+          data,
+        } = await axios.post(
+          "http://localhost:5000/applandproyects/us-central1/api/projectByID",
+          { id: projectId }
+        );
+        //console.log(data);
+        setState((prevState) => ({
+          ...prevState,
+          id: data.data.id,
+          img: data.data.img,
+          title: data.data.title,
+          author: { id: data.data.author, name: null },
+          category: { id: data.data.category, name: null },
+          date: data.data.date,
+          type: { id: data.data.type, name: null },
+          description: data.data.description,
+          qualification: data.data.qualification,
+          authorDescription: data.data.authorDescription,
+          longDescription: data.data.longDescription,
+          keyWords: data.data.keyWords,
+        }));
+      }
+    } catch (error) {
+      console.log("getDataInf", error);
+    }
+  };
+  //const stateS = { loading: true };
+  const [state, setState] = useState({
+    id: null,
+    img: " ",
+    title: " ",
+    author: { id: null, name: null },
+    category: { id: null, name: null },
+    date: " ",
+    type: { id: null, name: null },
+    description: " ",
+    qualification: " ",
+    authorDescription: " ",
+    longDescription: " ",
+    keyWords: " ",
+  });
+  getDataInf();
+
+  useEffect(() => {
+    
+    if (!state.author && !state.category && !state.type ) {
+    const getDataCategory = async (query) => {
+      try {
+          console.log(state.category.id);
+          let {
+            data,
+          } = await axios.post(
+            "http://localhost:5000/applandproyects/us-central1/api/category",
+            { id: state.category.id }
+          );
+          //console.log("dataCategory", data);
+          setState((prevState) => ({
+            ...prevState,
+            category: { name: data.data.name, id: data.data.id },
+          }));
+        
+      } catch (error) {
+        console.log("getDataCategory", error);
+      }
+    };
+    const getDataAuthor = async (query) => {
+      try {
+        
+          let i=1;
+          console.log(i);
+          let {
+            data,
+          } = await axios.post(
+            "http://localhost:5000/applandproyects/us-central1/api/user",
+            { id: state.author.id }
+          );
+          setState((prevState) => ({
+            ...prevState,
+            author: { name: data.data.name, id: data.data.id },
+          }));
+        
+      } catch (error) {
+        console.log("getDataAutor", error);
+      }
+    };
+    const getDataType = async (query) => {
+      try {
+          let {
+            data,
+          } = await axios.post(
+            "http://localhost:5000/applandproyects/us-central1/api/type",
+            { id: state.type.id }
+          );
+          //console.log("dataType", data);
+          setState((prevState) => ({
+            ...prevState,
+            type: { name: data.data.name, id: data.data.id },
+          }));
+        
+      } catch (error) {
+        console.log("getDataType", error);
+      }
+    };
+    getDataAuthor();
+    getDataType();
+    getDataCategory();
+  }
+  }, [
+    state.id,
+    state.img,
+    state.title,
+    state.author,
+    state.category,
+    state.date,
+    state.type,
+    state.description,
+    state.qualification,
+    state.authorDescription,
+    state.longDescription,
+    state.keyWords,
+    props.match.params.id,
+  ]);
+
+  const {
+    img,
+    title,
+    author,
+    category,
+    date,
+    type,
+    description,
+    qualification,
+    authorDescription,
+    longDescription,
+    keyWords,
+  } = state;
+
+  //const {onChange , form}=this.props
+  // mostraria 9999
+  return (
+    <div className="container">
+      {/* <Loader type="Grid" color="#00BFFF" height={80} width={80} /> */}
+      <form className="ml-10">
+        <div className="md:flex w-full max-sm">
+          <div className="w-16 h-16 mt-2 mb-1">
+            <div className="">
+              <img
+                src={img}
+                className="border-1 border-gray-200 w-60  mr-4"
+                alt=" "
+              ></img>
+            </div>
+          </div>
+          <div className="w-full md:items-left mb-8">
+            <div className="md:flex md:items-left mt-4 mb-4">
+              <div className="md:w-1/6 mr-2">
+                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1">
+                  Nombre del Proyecto
+                </label>
+              </div>
+              <div className="md:w-3/4">
+                <label
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  id="inline-full-name"
+                  placeholder="Nombre"
+                >
+                  {title}
+                </label>
+              </div>
+            </div>
+            <div className="md:flex md:items-left mt-4 mb-4">
+              <div className="md:w-1/6 mr-2">
+                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1">
+                  Autor
+                </label>
+              </div>
+              <div className="md:w-3/4">
+                <label
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  id="inline-full-name"
+                  placeholder="Autor"
+                >
+                  {author.name}
+                </label>
+              </div>
+            </div>
+            <div className="md:flex md:items-left mt-4 mb-4">
+              <div className="md:w-1/6 mr-2">
+                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1">
+                  Categoría
+                </label>
+              </div>
+              <div className="md:w-3/4">
+                <label
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  id="inline-full-name"
+                  placeholder="Categoría"
+                >
+                  {category.name}
+                </label>
+              </div>
+            </div>
+            <div className="md:flex md:items-left mt-4 mb-4">
+              <div className="md:w-1/6 mr-2">
+                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1">
+                  Fecha de Creación
+                </label>
+              </div>
+              <div className="md:w-3/4">
+                <label
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  id="inline-full-name"
+                >
+                  {date}
+                </label>
+              </div>
+            </div>
+            <div className="md:flex md:items-left mt-4 mb-4">
+              <div className="md:w-1/6 mr-2">
+                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1">
+                  Tipo
+                </label>
+              </div>
+              <div className="md:w-3/4">
+                <label
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  id="inline-full-name"
+                  placeholder="Tipo"
+                >
+                  {type.name}
+                </label>
+              </div>
+            </div>
+            <div className="md:flex md:items-left mt-4 mb-4">
+              <div className="md:w-1/6 mr-2">
+                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1">
+                  Descripción
+                </label>
+              </div>
+              <div className="md:w-3/4">
+                <label
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  id="inline-full-name"
+                  placeholder="Descripción"
+                >
+                  {description}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className=" md:items-left mt-4 mb-4">
+          <div className="md:w-2/3">
+            <label className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200">
+              {qualification}
+            </label>
+          </div>
+        </div>
+        <div className=" md:items-left mt-4 mb-4">
+          <div className="md:w-1/6 mr-2">
+            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1">
+              Acerca del Autor
+            </label>
+          </div>
+          <div className="md:w-2/3 mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-1 px-3">
+            <label className=" py-1 text-gray-700 ">{authorDescription}</label>
+          </div>
+        </div>
+        <div className="md:items-left mb-1">
+          <div className="md:w-1/6 mr-2">
+            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1">
+              Descripción Completa
+            </label>
+          </div>
+          <div className="md:w-2/3 mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-1 px-3">
+            <label className=" py-1 text-gray-700 ">{longDescription}</label>
+          </div>
+        </div>
+        <div className="md:items-left mb-1">
+          <div className="md:w-1/6 mr-2">
+            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1">
+              Palabras Clave
+            </label>
+          </div>
+          <div className="md:w-2/3 mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-1 px-3 ">
+            <label className=" py-1 text-gray-700 ">{keyWords}</label>
+          </div>
+        </div>
+      </form>
+      <div className=" pt-5 ml-10 md:items-right">
+        <div className="md:w-2/3">
+          <button
+            className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+            type="button"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default ProjectsDetails;
+
+/* import React from 'react';
+import PropTypes from 'prop-types';
+const Reutilizable = ({reu ,reu2})=>{
+    return(
+        <div>
+            <h1>
+                {`${reu} `}
+            </h1>
+                <p>{`${reu2} ++`}</p>
+        </div>
+    );
+}
+Reutilizable.propTypes={
+    reu:PropTypes.number.isRequired,
+    reu2:PropTypes.number.isRequired,
+};
+export default Reutilizable; */
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* 
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 const ProjectsDetails = (props) => {
   const [state, setState] = useState({
     id: props.location.data.id,
@@ -139,7 +473,6 @@ const ProjectsDetails = (props) => {
                   placeholder="Autor"
                 >
                   {author.name}
-                  {/* Este es el Autor del proyecto */}
                 </label>
               </div>
             </div>
@@ -156,7 +489,6 @@ const ProjectsDetails = (props) => {
                   placeholder="Categoría"
                 >
                   {category.name}
-                  {/* Esta es la Categoria del proyecto */}
                 </label>
               </div>
             </div>
@@ -172,7 +504,6 @@ const ProjectsDetails = (props) => {
                   id="inline-full-name"
                 >
                   {date}
-                  {/* Esta es la Fecha del proyecto */}
                 </label>
               </div>
             </div>
@@ -189,7 +520,6 @@ const ProjectsDetails = (props) => {
                   placeholder="Tipo"
                 >
                   {type.name}
-                  {/* Este es el Tipo del proyecto */}
                 </label>
               </div>
             </div>
@@ -206,36 +536,16 @@ const ProjectsDetails = (props) => {
                   placeholder="Descripción"
                 >
                   {description}
-                  {/* Esta es la Descripción del proyecto */}
                 </label>
               </div>
             </div>
-            {/*                             <div className="md:flex md:items-left mt-4 mb-4">
-                                <div className="md:w-1/6 mr-2">
-                                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1" htmlFor="inline-username">
-                                Password
-                                </label>
-                                </div>
-                                <div className="md:w-3/4">
-                                <input className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200" id="inline-username" type="password" placeholder="******************"/>
-                                </div>
-                            </div> */}
+
           </div>
-          {/*                 <div className="md:flex md:items-left mt-4 mb-4">
-                            <div className="md:w-1/6 mr-2"></div>
-                            <label className="md:w-2/3 block text-gray-500 font-bold">
-                            <input className=mr-2 leading-tight" type="checkbox"/>
-                            <span className="text-sm">
-                            Send me your newsletter!
-                            </span>
-                            </label>
-                        </div> */}
         </div>
         <div className=" md:items-left mt-4 mb-4">
           <div className="md:w-2/3">
             <label className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200">
               {qualification}
-              {/* del 1 al 5 */}
             </label>
           </div>
         </div>
@@ -248,12 +558,6 @@ const ProjectsDetails = (props) => {
           <div className="md:w-2/3 mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-1 px-3">
             <label className=" py-1 text-gray-700 ">
               {authorDescription}
-              {/* Esta es la Descripcion del Autor
-                                Esta es la Descripcion del Autor
-                                Esta es la Descripcion del Autor
-                                Esta es la Descripcion del Autor
-                                Esta es la Descripcion del Autor
-                                Esta es la Descripcion del Autor */}
             </label>
           </div>
         </div>
@@ -266,12 +570,6 @@ const ProjectsDetails = (props) => {
           <div className="md:w-2/3 mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-1 px-3">
             <label className=" py-1 text-gray-700 ">
               {longDescription}
-              {/* Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto
-                                Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto 
-                                Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto 
-                                Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto 
-                                Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto 
-                                Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto Esta es la Descripcion Completa del Proyecto  */}
             </label>
           </div>
         </div>
@@ -284,19 +582,18 @@ const ProjectsDetails = (props) => {
           <div className="md:w-2/3 mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-1 px-3 ">
             <label className=" py-1 text-gray-700 ">
               {keyWords}
-              {/* Estas son las Palabras Claves del Proyecto */}
             </label>
           </div>
         </div>
       </form>
       <div className=" pt-5 ml-10 md:items-right">
         <div className="md:w-2/3">
-          {/*           <button
+                     <button
             className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
             type="button"
           >
             Guardar
-          </button> */}
+          </button>
         </div>
       </div>
     </div>
@@ -305,22 +602,4 @@ const ProjectsDetails = (props) => {
 
 export default ProjectsDetails;
 
-/* import React from 'react';
-import PropTypes from 'prop-types';
-const Reutilizable = ({reu ,reu2})=>{
-    return(
-        <div>
-            <h1>
-                {`${reu} `}
-            </h1>
-                <p>{`${reu2} ++`}</p>
-        </div>
-    );
-}
-
-Reutilizable.propTypes={
-    reu:PropTypes.number.isRequired,
-    reu2:PropTypes.number.isRequired,
-
-};
-export default Reutilizable; */
+ */
