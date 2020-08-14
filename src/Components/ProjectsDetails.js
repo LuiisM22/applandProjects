@@ -52,17 +52,16 @@ const ProjectsDetails = (props) => {
 
   useEffect(() => {
     
-    if (!state.author && !state.category && !state.type ) {
+    if (!state.author.name && !state.category.name && !state.type.name ) {
     const getDataCategory = async (query) => {
       try {
-          console.log(state.category.id);
+          //console.log(state.category.id);
           let {
             data,
           } = await axios.post(
             "http://localhost:5000/applandproyects/us-central1/api/category",
             { id: state.category.id }
           );
-          //console.log("dataCategory", data);
           setState((prevState) => ({
             ...prevState,
             category: { name: data.data.name, id: data.data.id },
@@ -74,9 +73,6 @@ const ProjectsDetails = (props) => {
     };
     const getDataAuthor = async (query) => {
       try {
-        
-          let i=1;
-          console.log(i);
           let {
             data,
           } = await axios.post(

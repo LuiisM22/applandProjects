@@ -1,5 +1,4 @@
 const functions = require("firebase-functions");
-//const auth  = require("firebase-auth");
 const cors = require("cors");
 const admin = require("firebase-admin");
 const express = require("express");
@@ -7,7 +6,7 @@ const serviceAccount = require("./applandproyects-firebase-adminsdk-k6yt4-87e319
 const bodyParser = require("body-parser");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://applandproyects.firebaseio.com",
+  databaseURL: "https://applandproyects.firebaseio.com"
 });
 const db = admin.firestore();
 const app = express();
@@ -15,12 +14,12 @@ app.use(
   cors({
     origin: true,
   })
-);
+  );
 app.use(
   bodyParser.urlencoded({
     extended: false,
   })
-);
+  );
 app.use(bodyParser.json());
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 async function getAll(collections, req, res) {
@@ -153,8 +152,9 @@ app.post("/projects", async (req, res) => {
     date,
     type,
     description,
+    authorDescription,
     longDescription,
-    keyWords,
+    keyWords
   } = req.body;
 
   try {
@@ -165,6 +165,7 @@ app.post("/projects", async (req, res) => {
       date,
       type,
       description,
+      authorDescription,
       longDescription,
       keyWords,
     });
