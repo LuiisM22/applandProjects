@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { NavT } from "./Components/NavT";
+import { Footer } from "./Components/Footer";
 import { Grid } from "./Components/Grid";
 import { MyProjects } from "./Components/MyProjects";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -28,6 +29,7 @@ class App extends Component {
         </BrowserRouter>
         {/* <Reutilizable reu={'holaa'} reu2={'reu2'}></Reutilizable> */}
         {/*  <Grid/> */}
+        <Footer/>
       </div>
     );
   }

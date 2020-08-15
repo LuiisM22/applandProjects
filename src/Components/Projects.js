@@ -3,7 +3,7 @@ import Card from "./Card.js";
 import { Link } from "react-router-dom";
 const Projects = ({ project }) => {
   return (
-    <main className=" animated fadeIn Low">
+    <main className="flex-1 animated fadeIn Low">
       {project.map((project) => (
           <Link
           to={{

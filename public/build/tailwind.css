@@ -12,7 +12,9 @@ html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
-
+.center{
+  padding-left:44%;
+}
 /* Sections
    ========================================================================== */
 
@@ -23,14 +25,19 @@ html {
 body {
   margin: 0;
 }
+.fill-window {
+  height: 100vmin;
+  margin-left:5%;
+  margin-right:5%;
+  overflow: hidden;
+}
 
 form {
   margin-bottom: 0;
 }
-html, body {
-  height: 100%;
+body > #root > div {
+  height: 100vh;
 }
-
 
 
 .modal {
@@ -120,7 +127,7 @@ html, body {
   main {
     /* height: 100vh; */
     display: grid;
-    gap: 8px;
+    gap: 36px;
     grid-template-columns: repeat(3, 350px);
     grid-template-rows: 1fr ;
     justify-content:center;
