@@ -46,7 +46,7 @@ const ProjectsDetails = (props) => {
     qualification: " ",
     authorDescription: " ",
     longDescription: " ",
-    keyWords: " ",
+    keyWords: " "
   });
   getDataInf();
 

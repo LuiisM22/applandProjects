@@ -129,7 +129,7 @@ const ProjectsForm = () => {
                   name="title"
                   onChange={handleChange}
                   value={state.projectName}
-                  {...state.author="a"}
+                  {...state.author="TE3EtuGzbF2F9ZNa64Fv"}
                 ></input>
               </div>
             </div>
