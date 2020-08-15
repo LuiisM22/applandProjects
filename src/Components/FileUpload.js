@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+/* import React, { Component } from 'react';
 import firebase from 'firebase';
 
 class FileUpload extends Component {
   constructor () {
     super();
     this.state = {
-      uploadValue: 0
+      uploadValue: 0,
+      picture:""
     };
 
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -35,14 +36,14 @@ class FileUpload extends Component {
 
   render () {
     return (
-      <div>
+      <div className="w-full">
         <progress value={this.state.uploadValue} max='100'>
           {this.state.uploadValue} %
         </progress>
-        <br/>
+        
         <input type="file" onChange={this.handleOnChange} />
-        <br/>
-        <img width="320" src={this.state.picture} alt=""/>
+        
+        <img width="220" src={this.state.picture} alt=""/>
       </div>
     )
   }
@@ -50,26 +51,27 @@ class FileUpload extends Component {
 
 export default FileUpload;
 
+ */
 
 
-/* 
 import React, { Component } from 'react';
 import firebase from 'firebase';
 
 class FileUpload extends Component {
-  constructor () {
+  constructor (props) {
     super();
     this.state = {
       uploadValue: 0,
       picture: ""
     };
     this.handleUpload = this.handleUpload.bind(this);
+    
   } 
 
     handleUpload(event)
     {
     const file = event.target.files[0];
-    const storageRef = firebase.storage().ref(`/fotos/${file.name}`);
+    const storageRef = firebase.storage().ref(`/src/img/${file.name}`);
     const task = storageRef.put(file);
     
     task.on('state_changed' , snapshot =>{
@@ -84,11 +86,15 @@ class FileUpload extends Component {
                     this.setState({
                         picture: url
                     });
+                    this.handleURLi(url);
                 })
     });
     }
-
+    handleURLi = (url) => {
+      this.props.getURL(url);            
+    }
   render () {
+
     return (
       <div>
         <progress value={this.state.uploadValue} max='100'>
@@ -97,11 +103,12 @@ class FileUpload extends Component {
         <br/>
         <input type="file" onChange={this.handleUpload} />
         <br/>
-        <img width="150" src={this.state.picture} alt=""/>
+        <img width="220" src={this.state.picture} alt=""/>
       </div>
     )
   }
 }
 
-export default FileUpload; */
+export default FileUpload;
+
 

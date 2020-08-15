@@ -154,6 +154,7 @@ app.post("/user", async (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/projects", async (req, res) => {
   const {
+    img,
     title,
     author,
     category,
@@ -167,6 +168,7 @@ app.post("/projects", async (req, res) => {
 
   try {
     const docRef = await db.collection("projects").add({
+      img,
       title,
       author,
       category,

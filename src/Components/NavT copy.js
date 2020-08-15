@@ -6,7 +6,6 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 firebase.initializeApp({
   apiKey: "AIzaSyAauRcZVPtFCEUKS8eKdPXxv2N0WpuFoSc",
   authDomain: "applandproyects.firebaseapp.com",
-  storageBucket: "gs://applandproyects.appspot.com/",
 });
 
 SimpleModal.propTypes = {
