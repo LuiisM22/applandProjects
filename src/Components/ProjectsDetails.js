@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-//import Loader from 'react-loader-spinner'
+import LoadComments from "../Services/LoadComments";
+import UseLoader from "../Services/UseLoader";
+
 const ProjectsDetails = (props) => {
   const getDataInf = async (query) => {
-    let projectId = props.match.params.id;
+    const projectId = props.match.params.id;
     try {
       if (!state.id) {
-        let {
+        const {
           data,
         } = await axios.post(
           "http://localhost:5000/applandproyects/us-central1/api/projectByID",
@@ -33,7 +35,6 @@ const ProjectsDetails = (props) => {
       console.log("getDataInf", error);
     }
   };
-  //const stateS = { loading: true };
   const [state, setState] = useState({
     id: null,
     img: " ",
@@ -46,17 +47,17 @@ const ProjectsDetails = (props) => {
     qualification: " ",
     authorDescription: " ",
     longDescription: " ",
-    keyWords: " "
+    keyWords: " ",
   });
   getDataInf();
 
   useEffect(() => {
-    
-    if (!state.author.name && !state.category.name && !state.type.name ) {
-    const getDataCategory = async (query) => {
-      try {
+    if (!state.author.name && !state.category.name && !state.type.name) {
+      const getDataCategory = async (query) => {
+        try {
+          showLoader();
           //console.log(state.category.id);
-          let {
+          const {
             data,
           } = await axios.post(
             "http://localhost:5000/applandproyects/us-central1/api/category",
@@ -66,14 +67,14 @@ const ProjectsDetails = (props) => {
             ...prevState,
             category: { name: data.data.name, id: data.data.id },
           }));
-        
-      } catch (error) {
-        console.log("getDataCategory", error);
-      }
-    };
-    const getDataAuthor = async (query) => {
-      try {
-          let {
+          hideLoader();
+        } catch (error) {
+          console.log("getDataCategory", error);
+        }
+      };
+      const getDataAuthor = async (query) => {
+        try {
+          const {
             data,
           } = await axios.post(
             "http://localhost:5000/applandproyects/us-central1/api/user",
@@ -83,14 +84,13 @@ const ProjectsDetails = (props) => {
             ...prevState,
             author: { name: data.data.name, id: data.data.id },
           }));
-        
-      } catch (error) {
-        console.log("getDataAutor", error);
-      }
-    };
-    const getDataType = async (query) => {
-      try {
-          let {
+        } catch (error) {
+          console.log("getDataAutor", error);
+        }
+      };
+      const getDataType = async (query) => {
+        try {
+          const {
             data,
           } = await axios.post(
             "http://localhost:5000/applandproyects/us-central1/api/type",
@@ -101,32 +101,44 @@ const ProjectsDetails = (props) => {
             ...prevState,
             type: { name: data.data.name, id: data.data.id },
           }));
-        
-      } catch (error) {
-        console.log("getDataType", error);
-      }
-    };
-    getDataAuthor();
-    getDataType();
-    getDataCategory();
-  }
-  }, [
-    state.id,
-    state.img,
-    state.title,
-    state.author,
-    state.category,
-    state.date,
-    state.type,
-    state.description,
-    state.qualification,
-    state.authorDescription,
-    state.longDescription,
-    state.keyWords,
-    props.match.params.id,
-  ]);
+        } catch (error) {
+          console.log("getDataType", error);
+        }
+      };
+      getDataAuthor();
+      getDataType();
+      getDataCategory();
+    }
+  });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    //setState({ [e.target.name]: e.target.value });
+    //setProject();
+    /* try {
+      //console.log(state);
+      let config = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(state.id),
+      };
+      let res = await fetch(
+        "http://localhost:5000/applandproyects/us-central1/api/Delete",
+        config
+      );
+      let json = await res.json();
+      console.log(json);
+      props.history.push("/")
+    } catch (error) {
+      console.log(error);
+    } */
+  };
 
   const {
+    id,
     img,
     title,
     author,
@@ -139,15 +151,14 @@ const ProjectsDetails = (props) => {
     longDescription,
     keyWords,
   } = state;
+  const [loader, showLoader, hideLoader] = UseLoader();
 
   //const {onChange , form}=this.props
-  // mostraria 9999
   return (
-    <div className="container">
-      {/* <Loader type="Grid" color="#00BFFF" height={80} width={80} /> */}
-      <form className="ml-10">
+    <div class="container">
+      <form onSubmit={handleSubmit} className="ml-10  pt-12 mt-8">
         <div className="md:flex w-full max-sm">
-          <div className="w-16 h-16 mt-2 mb-1">
+          <div className="w-1/6 mt-8 mb-1">
             <div className="">
               <img
                 src={img}
@@ -156,7 +167,7 @@ const ProjectsDetails = (props) => {
               ></img>
             </div>
           </div>
-          <div className="w-full md:items-left mb-8">
+          <div className="w-full md:items-left ">
             <div className="md:flex md:items-left mt-4 mb-4">
               <div className="md:w-1/6 mr-2">
                 <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1">
@@ -165,7 +176,7 @@ const ProjectsDetails = (props) => {
               </div>
               <div className="md:w-3/4">
                 <label
-                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded flex w-1/2 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                   placeholder="Nombre"
                 >
@@ -181,7 +192,7 @@ const ProjectsDetails = (props) => {
               </div>
               <div className="md:w-3/4">
                 <label
-                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded  flex w-1/2  py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                   placeholder="Autor"
                 >
@@ -197,7 +208,7 @@ const ProjectsDetails = (props) => {
               </div>
               <div className="md:w-3/4">
                 <label
-                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded  flex w-1/2  py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                   placeholder="Categoría"
                 >
@@ -213,7 +224,7 @@ const ProjectsDetails = (props) => {
               </div>
               <div className="md:w-3/4">
                 <label
-                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded  flex w-1/2  py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                 >
                   {date}
@@ -228,7 +239,7 @@ const ProjectsDetails = (props) => {
               </div>
               <div className="md:w-3/4">
                 <label
-                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded  flex w-1/2  py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                   placeholder="Tipo"
                 >
@@ -244,7 +255,7 @@ const ProjectsDetails = (props) => {
               </div>
               <div className="md:w-3/4">
                 <label
-                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+                  className="bg-gray-200 appearance-none border-0 border-gray-200 rounded  flex w-1/2  py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
                   placeholder="Descripción"
                 >
@@ -255,10 +266,22 @@ const ProjectsDetails = (props) => {
           </div>
         </div>
         <div className=" md:items-left mt-4 mb-4">
-          <div className="md:w-2/3">
-            <label className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200">
-              {qualification}
+          <div className="md:w-2/3 flex mr-2">
+            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1">
+              Calificación
             </label>
+            <div className=" flex">
+              {Array(Number(qualification)).fill(
+                <svg className="h-6 w-6 fill-current text-teal-200">
+                  <path d="M8.128 19.825a1.586 1.586 0 0 1-1.643-.117 1.543 1.543 0 0 1-.53-.662 1.515 1.515 0 0 1-.096-.837l.736-4.247-3.13-3a1.514 1.514 0 0 1-.39-1.569c.09-.271.254-.513.475-.698.22-.185.49-.306.776-.35L8.66 7.73l1.925-3.862c.128-.26.328-.48.577-.633a1.584 1.584 0 0 1 1.662 0c.25.153.45.373.577.633l1.925 3.847 4.334.615c.29.042.562.162.785.348.224.186.39.43.48.704a1.514 1.514 0 0 1-.404 1.58l-3.13 3 .736 4.247c.047.282.014.572-.096.837-.111.265-.294.494-.53.662a1.582 1.582 0 0 1-1.643.117l-3.865-2-3.865 2z" />
+                </svg>
+              )}
+              {Array(5 - Number(qualification)).fill(
+                <svg className="h-6 w-6 fill-current text-gray-500">
+                  <path d="M8.128 19.825a1.586 1.586 0 0 1-1.643-.117 1.543 1.543 0 0 1-.53-.662 1.515 1.515 0 0 1-.096-.837l.736-4.247-3.13-3a1.514 1.514 0 0 1-.39-1.569c.09-.271.254-.513.475-.698.22-.185.49-.306.776-.35L8.66 7.73l1.925-3.862c.128-.26.328-.48.577-.633a1.584 1.584 0 0 1 1.662 0c.25.153.45.373.577.633l1.925 3.847 4.334.615c.29.042.562.162.785.348.224.186.39.43.48.704a1.514 1.514 0 0 1-.404 1.58l-3.13 3 .736 4.247c.047.282.014.572-.096.837-.111.265-.294.494-.53.662a1.582 1.582 0 0 1-1.643.117l-3.865-2-3.865 2z" />
+                </svg>
+              )}
+            </div>
           </div>
         </div>
         <div className=" md:items-left mt-4 mb-4">
@@ -267,7 +290,7 @@ const ProjectsDetails = (props) => {
               Acerca del Autor
             </label>
           </div>
-          <div className="md:w-2/3 mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-1 px-3">
+          <div className="mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded flex w-2/3 h-auto py-1 px-3">
             <label className=" py-1 text-gray-700 ">{authorDescription}</label>
           </div>
         </div>
@@ -277,7 +300,7 @@ const ProjectsDetails = (props) => {
               Descripción Completa
             </label>
           </div>
-          <div className="md:w-2/3 mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-1 px-3">
+          <div className="mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded  flex w-2/3  h-auto py-1 px-3">
             <label className=" py-1 text-gray-700 ">{longDescription}</label>
           </div>
         </div>
@@ -287,21 +310,55 @@ const ProjectsDetails = (props) => {
               Palabras Clave
             </label>
           </div>
-          <div className="md:w-2/3 mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-1 px-3 ">
+          <div className="mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded  flex w-2/3  h-auto py-1 px-3 ">
             <label className=" py-1 text-gray-700 ">{keyWords}</label>
           </div>
         </div>
       </form>
-      <div className=" pt-5 ml-10 md:items-right">
+      <div className="md:w-1/6 ml-10 mr-2 ">
+        <label className="block text-gray-500 font-bold text-xl md:text-left mb-1 md:mb-0 pr-1">
+          Comentarios
+        </label>
+      </div>
+      <div className=" pb-12 ml-10 md:items-right">
         <div className="md:w-2/3">
-          <button
-            className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-            type="button"
-          >
-            Guardar
-          </button>
+          <LoadComments idProject={id} key={id} />
         </div>
       </div>
+
+      <form>
+        <div className=" md:items-left ml-10 mt-4 mb-4">
+          <div className="md:w-1/6 mr-2">
+            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1">
+              Calificar y Comentar
+            </label>
+          </div>
+          <div className="md:w-1/12 mb-4">
+            <input className="pl-12 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"></input>
+          </div>
+          <div className="mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded  flex w-2/3  h-auto py-1 px-3 ">
+            <input
+              required
+              className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+              id="inline-full-name"
+              placeholder="Descripción"
+              name="Comentar"
+            ></input>
+          </div>
+        </div>
+        <div className=" pb-12 ml-20 md:items-right">
+          <div className="md:w-2/3">
+            <button
+              className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              type="submit"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </form>
+
+      {loader}
     </div>
   );
 };
@@ -350,7 +407,7 @@ const ProjectsDetails = (props) => {
     const getDataCategory = async (query) => {
       try {
         if (!state.category.name) {
-          let {
+          const {
             data,
           } = await axios.post(
             "http://localhost:5000/applandproyects/us-central1/api/category",
@@ -369,7 +426,7 @@ const ProjectsDetails = (props) => {
     const getDataAuthor = async (query) => {
       try {
         if (!state.author.name) {
-          let {
+          const {
             data,
           } = await axios.post(
             "http://localhost:5000/applandproyects/us-central1/api/user",
@@ -388,7 +445,7 @@ const ProjectsDetails = (props) => {
     const getDataType = async (query) => {
       try {
         if (!state.type.name) {
-          let {
+          const {
             data,
           } = await axios.post(
             "http://localhost:5000/applandproyects/us-central1/api/type",

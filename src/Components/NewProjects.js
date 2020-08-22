@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//var request = require('request');
 import axios from "axios";
 import FileUpload from "./FileUpload";
 const ProjectsForm = (props) => {
@@ -103,8 +102,8 @@ const ProjectsForm = (props) => {
   }
   return (
     <div className="container">
-      <form onSubmit={handleSubmit} className="ml-10">
-        <div className="md:flex w-full mt-8 max-sm">
+      <form onSubmit={handleSubmit} className="ml-10 pb-12 pt-12 mt-8">
+        <div className="md:flex w-full   max-sm">
           <div className="w-64 h-64 mt-2 mb-1">
             <div className="">
               <FileUpload getURL={getURL}></FileUpload>
@@ -113,7 +112,6 @@ const ProjectsForm = (props) => {
                 className="border-1 border-gray-200 w-60  mr-4"
                 alt=" "
               ></img> */}
-              {  console.log('URLi',state.URLi)}
             </div>
           </div>
           <div className="w-full md:items-left">
@@ -129,11 +127,12 @@ const ProjectsForm = (props) => {
                   id="inline-full-name"
                   placeholder="Nombre"
                   required
-                  name="title"
+                  name='title'
                   onChange={handleChange}
                   value={state.projectName}
                   {...(state.author = "TE3EtuGzbF2F9ZNa64Fv")}
                   {...(state.img = state.URLi)}
+                  {...(state.qualification = "N/A")}
                 ></input>
               </div>
             </div>
@@ -162,16 +161,15 @@ const ProjectsForm = (props) => {
                 </label>
               </div>
               <div className="md:w-2/4">
-                <div className="inline-block relative w-full">
+                <div className="inline-block  w-full">
                   <select
                     name="category"
                     onChange={handleChange}
                     className="block appearance-none w-full bg-gray-200 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded text-gray-500 shadow leading-tight focus:outline-none focus:shadow-outline"
                   >
                     <option>Seleccione una Categoría</option>
-                    {console.log("DataCategory ",state.DataCategory)}
                     {state.DataCategory.map((category) => (
-                      <option>{category.name}</option>
+                      <option key={category.name}>{category.name}</option>
                     ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -226,9 +224,8 @@ const ProjectsForm = (props) => {
                     className="block text-gray-500 appearance-none w-full bg-gray-200 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                   >
                     <option>Seleccione un Tipo</option>
-                    {console.log("DataType ",state2.DataType)}
                     {state2.DataType.map((type) => (
-                      <option required>{type.name}</option>
+                      <option required key={type.name}>{type.name}</option>
                     ))}
                   </select>
 
@@ -324,7 +321,7 @@ const ProjectsForm = (props) => {
             ></input>
           </div>
         </div>
-        <div className=" pt-5 ml-10 md:items-right">
+        <div className=" pb-12 ml-10 md:items-right">
           <div className="md:w-2/3">
             <button
               className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
@@ -335,6 +332,7 @@ const ProjectsForm = (props) => {
           </div>
         </div>
       </form>
+     
     </div>
   );
 };

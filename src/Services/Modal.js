@@ -8,7 +8,7 @@ export default class SimpleModal extends React.Component {
       return null;
   }
   return (
-    <div className="absolute modal" id="modal">
+    <div class="absolute modal z-10" id="modal">
       <div className="content">{this.props.children}</div>
       <div className="actions">
         <button

@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "./Card.js";
+import Card from "../Components/Card.js";
 import { Link } from "react-router-dom";
 const Projects = ({ project }) => {
   return (

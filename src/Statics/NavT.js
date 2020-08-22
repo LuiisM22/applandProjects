@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import SimpleModal from "./Modal";
+import SimpleModal from "../Services/Modal";
 import PropTypes from "prop-types";
-import firebase from "firebase";
+//import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+const firebase = require('firebase/app');
+
 firebase.initializeApp({
   apiKey: "AIzaSyAauRcZVPtFCEUKS8eKdPXxv2N0WpuFoSc",
   authDomain: "applandproyects.firebaseapp.com",
@@ -33,7 +35,7 @@ export class NavT extends Component {
       firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     ],
     callbacks: {
-      signInSuccess: () => false,
+      signInSuccessWithAuthResult: () => false,
     },
   };
   _handleChange = (e) => {
@@ -59,39 +61,23 @@ export class NavT extends Component {
   componentDidMount = () => {
     firebase.auth().onAuthStateChanged((user) => {
       this.setState({ isSignedIn: !!user });
-      this.setState({ photo: firebase.auth().currentUser.photoURL });
+      //this.setState({ photo: firebase.auth().currentUser.photoURL });
       if (!firebase.auth().currentUser.photoURL) {
-        this.setState({ photo: this.photo });
+        this.setState({ photo: this.state.photo });
       } else {
         this.setState({ photo: firebase.auth().currentUser.photoURL });
       }
     });
   };
 
-  data() {
-    return {
-      isOpen: false,
-    };
-  }
-  created() {
-    const handleEscape = (e) => {
-      if (e.key === "Esc" || e.key === "Escape") {
-        this.isOpen = false;
-      }
-    };
-    document.addEventListener("keydown", handleEscape);
-    this.$once("hook:beforeDestroy", () => {
-      document.removeEventListener("keydown", handleEscape);
-    });
-  }
 
   render() {
     //const {user}=this.props
     return (
       <div>
-        <link rel="stylesheet" href="../../build/tailwind.css"></link>
-        <nav className="flex w-full absolute top-0 items-center justify-between flex-wrap bg-gray-700 p-1">
-          <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <nav className="center flex fixed  w-full z-10 top-0 items-center justify-between flex-wrap bg-gray-700 p-1">
+
+          <div className="flex items-center flex-shrink-0 text-teal-200 mr-6">
             <a href="/" className="font-semibold text-xl tracking-tight">
               Appland Projects
             </a>
@@ -135,7 +121,7 @@ export class NavT extends Component {
               //id="centered-toggle-button"
               type="button"
               id="googleLogin"
-              className="mx-3 lg:inline-block  z-10 block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white"
+              className="mx-3 lg:inline-block z-10  block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white"
             >
               <img
                 className="h-full w-full object-cover"
@@ -148,13 +134,13 @@ export class NavT extends Component {
         <SimpleModal onClose={this.showModal} show={this.state.show}>
           {this.state.isSignedIn ? (
             <div>
-              {/* <div>Signed In</div> */}
               <h1>{firebase.auth().currentUser.displayName}</h1>
-              <button 
-                              className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
-                onClick={() => firebase.auth().signOut()}
+              <button
+                className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                onClick={() => firebase.auth().signOut() && this.setState({ photo:"https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2FNoProfile.jpg?alt=media&token=e11b597b-cfd8-4675-b263-f810a9bcb902"}) }
               >
-              Cerrar Sesión</button>
+                Cerrar Sesión
+              </button>
             </div>
           ) : (
             <StyledFirebaseAuth

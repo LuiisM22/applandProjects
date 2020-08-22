@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-import Projects from './Projects'
+import Projects from '../Services/Projects'
 //import {Link} from 'react-router-dom'
 import axios from "axios";
 export class MyProjects extends Component {
@@ -34,7 +34,7 @@ export class MyProjects extends Component {
     }
     render(){
         return(
-            <div className=" bg-gray-400">
+            <div class=" bg-gray-400">
             <Projects 
                 projects={this.state.data}
             />

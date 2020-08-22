@@ -1,9 +1,9 @@
 
 import React, { Component } from "react";
 import "./App.css";
-import { NavT } from "./Components/NavT";
-import { Footer } from "./Components/Footer";
-import { Grid } from "./Components/Grid";
+import { NavT } from "./Statics/NavT";
+import { Footer } from "./Statics/Footer";
+import  Grid  from "./Services/Grid";
 import { MyProjects } from "./Components/MyProjects";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NewProjects from "./Components/NewProjects";
@@ -13,6 +13,7 @@ class App extends Component {
   render() {
     return (
       <div>
+      <link rel="stylesheet" href="../build/tailwind.css"></link>
         <NavT/>
         <BrowserRouter>
           <Switch>

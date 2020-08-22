@@ -1,15 +1,15 @@
-const functions = require("firebase-functions");
-const cors = require("cors");
-const admin = require("firebase-admin");
-const express = require("express");
-const serviceAccount = require("./applandproyects-firebase-adminsdk-k6yt4-87e319260b.json");
-const bodyParser = require("body-parser");
+let functions = require("firebase-functions");
+let cors = require("cors");
+let admin = require("firebase-admin");
+let express = require("express");
+let serviceAccount = require("./applandproyects-firebase-adminsdk-k6yt4-87e319260b.json");
+let bodyParser = require("body-parser");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://applandproyects.firebaseio.com"
 });
-const db = admin.firestore();
-const app = express();
+let db = admin.firestore();
+let app = express();
 app.use(
   cors({
     origin: true,
@@ -25,9 +25,9 @@ app.use(bodyParser.json());
 async function getAll(collections, req, res) {
   try {
     let data = [];
-    const collectionRef = db.collection(collections);
-    const docSnap = await collectionRef.get();
-    const collection = docSnap.docs.forEach((doc) => {
+    let collectionRef = db.collection(collections);
+    let docSnap = await collectionRef.get();
+    let collection = docSnap.docs.forEach((doc) => {
       data.push({
         id: doc.id,
         ...doc.data(),
@@ -61,8 +61,8 @@ app.get("/types", (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/category", async (req, res) => {
   try {
-    const { id } = req.body;
-    const docRef = await db.collection("categories").doc(id).get();
+    let { id } = req.body;
+    let docRef = await db.collection("categories").doc(id).get();
     //console.log(docRef.data());
     res.status(201).json({
       success: true,
@@ -84,8 +84,8 @@ app.post("/category", async (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/type", async (req, res) => {
   try {
-    const { id } = req.body;
-    const docRef = await db.collection("types").doc(id).get();
+    let { id } = req.body;
+    let docRef = await db.collection("types").doc(id).get();
     //console.log(docRef.data());
     res.status(201).json({
       success: true,
@@ -107,8 +107,8 @@ app.post("/type", async (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/projectByID", async (req, res) => {
   try {
-    const { id } = req.body;
-    const docRef = await db.collection("projects").doc(id).get();
+    let { id } = req.body;
+    let docRef = await db.collection("projects").doc(id).get();
     //console.log(docRef.data());
     res.status(201).json({
       success: true,
@@ -130,8 +130,8 @@ app.post("/projectByID", async (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/user", async (req, res) => {
   try {
-    const { id } = req.body;
-    const docRef = await db.collection("users").doc(id).get();
+    let { id } = req.body;
+    let docRef = await db.collection("users").doc(id).get();
     //console.log(docRef.data());
     res.status(201).json({
       success: true,
@@ -150,10 +150,53 @@ app.post("/user", async (req, res) => {
     console.log(error.message);
   }
 });
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/* app.post("/Delete", async(req, res) =>{
+  try {
+    let { id } = req.body;
+    let docRef = db.collection("projects").doc(id).delete().then(function() {})
+      res.status(201).json({
+        success: true,
+        message: "datos borrados correctamente",})
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      data: [],
+      error,
+    });
+    console.log(error.message);
+  }; */
+//////////////////////////////////////////////////////////////////////////////////
+app.post("/comments", async (req, res) => {
+  let data = [];
+  let { project } = req.body;
+  try {
+    let docRef = db.collection("comments");
+    let docSnap = await docRef.where('project', '==', project).get();
+    let comments = docSnap.docs.forEach((doc) => {
+      data.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+    res.status(201).json({
+      success: true,
+      data: data,
+      message: "datos obtenidos correctamente",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      data: error,
+      message: "Error al obtener datos ",
+    });
+    console.log(error.message);
+  }
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/projects", async (req, res) => {
-  const {
+  let {
     img,
     title,
     author,
@@ -161,13 +204,14 @@ app.post("/projects", async (req, res) => {
     date,
     type,
     description,
+    qualification,
     authorDescription,
     longDescription,
     keyWords
   } = req.body;
 
   try {
-    const docRef = await db.collection("projects").add({
+    let docRef = await db.collection("projects").add({
       img,
       title,
       author,
@@ -175,6 +219,7 @@ app.post("/projects", async (req, res) => {
       date,
       type,
       description,
+      qualification,
       authorDescription,
       longDescription,
       keyWords,
@@ -198,10 +243,10 @@ app.get("/projectsByAuthor/:idAuthor", async (req, res) => {
   try {
     let data = [];
     let projectsRef = db.collection("projects");
-    const docSnap = await projectsRef
+    let docSnap = await projectsRef
       .where("author", "==", req.params.idAuthor)
       .get();
-    const projects = docSnap.docs.forEach((doc) => {
+    let projects = docSnap.docs.forEach((doc) => {
       data.push({
         id: doc.id,
         ...doc.data(),
@@ -226,7 +271,7 @@ app.get("/projectsById/:idProject", async (req, res) => {
   try {
     let data = [];
     let projectsRef = db.collection("projects");
-    const docSnap = await projectsRef.get();
+    let docSnap = await projectsRef.get();
     //console.log(projectsRef);
     docSnap.docs.forEach((doc) => {
       data.push({
@@ -250,41 +295,14 @@ app.get("/projectsById/:idProject", async (req, res) => {
   }
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get("/comments/:idProject", async (req, res) => {
-  //console.log(req.params.idProject)
-  try {
-    let data = [];
-    let projectsRef = db.collection("comments");
-    const docSnap = await projectsRef.get();
-    //console.log(projectsRef);
-    docSnap.docs.forEach((doc) => {
-      data.push({
-        id: doc.id,
-        ...doc.data(),
-      });
-    });
-    data2 = data.find((data1) => (data1.id = req.params.idProject));
-    console.log(data2);
-    res.status(201).json({
-      success: true,
-      data: data2,
-      message: "datos obtenidos correctamente",
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      data: error,
-      message: "Error al obtener datos ",
-    });
-  }
-});
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.post("/users", async (req, res) => {
-  const { firstName, lastName } = req.body;
+  let { firstName, lastName } = req.body;
 
   try {
-    const docRef = await db.collection("users").add({
+    let docRef = await db.collection("users").add({
       firstName,
       lastName,
     });

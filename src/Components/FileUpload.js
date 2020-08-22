@@ -62,7 +62,7 @@ class FileUpload extends Component {
     super();
     this.state = {
       uploadValue: 0,
-      picture: ""
+      picture: "https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2Fvacio.png?alt=media&token=2a9f63d6-3898-4259-889c-e0017b649e2f"
     };
     this.handleUpload = this.handleUpload.bind(this);
     

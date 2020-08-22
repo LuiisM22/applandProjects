@@ -1,9 +1,8 @@
 import React  from 'react';
-import ProjectsDetails from './ProjectsDetails.js';
-//import axios from "axios";
+import ProjectsDetails from '../Components/ProjectsDetails.js';
 const Details =({ detail })=>(
     <div>
-        <div className="flex ml-4 mt-4 mr-4 mb-4 animated fadeIn Low">
+        <div class="flex ml-4 mt-4 mr-4 mb-4 animated fadeIn Low">
             {
                 detail.map((detail1)=> (
                     <ProjectsDetails
