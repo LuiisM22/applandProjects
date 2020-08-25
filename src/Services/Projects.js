@@ -5,13 +5,13 @@ const Projects = ({ project }) => {
   return (
     <main className="flex-1 animated fadeIn Low">
       {project.map((project) => (
-          <Link
+        <Link
           to={{
-              pathname: `/ProjectsDetails/${project.id}`,
-              data: project,
-            }}
-            key={project.id}
-            >
+            pathname: `/ProjectsDetails/${project.id}`,
+            data: project,
+          }}
+          key={project.id}
+        >
           <Card data={project} key={project.id} />
         </Link>
       ))}

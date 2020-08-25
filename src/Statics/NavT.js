@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import SimpleModal from "../Services/Modal";
+import axios from "axios";
 import PropTypes from "prop-types";
-import firebase from "firebase";
+//import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-//const firebase = require('firebase/app');
-import NewProjects from "../Components/NewProjects";
+let firebase = require('firebase/app');
 
 firebase.initializeApp({
   apiKey: "AIzaSyAauRcZVPtFCEUKS8eKdPXxv2N0WpuFoSc",
@@ -21,7 +21,7 @@ export class NavT extends Component {
   state = {
     inputSearch: "",
     isSignedIn: false,
-    User:{},
+    User: {},
     photo:
       "https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2FNoProfile.jpg?alt=media&token=e11b597b-cfd8-4675-b263-f810a9bcb902",
     show: false,
@@ -49,46 +49,45 @@ export class NavT extends Component {
     e.preventDefault();
     console.log(this.state.inputSearch);
   };
-  handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(this.state.inputSearch);
-    //this.firebase.auth.g
-  };
-  /*     Login(){
-    const provider = new this.firebase.auth.GoogleAuthProvider();
-    this.firebase.auth().signInWithPopup(provider).then(result=>{
-    console.log(result);
-    auth.signInWithPopup()  
-    console.log('clicked');
-  } */
+
   componentDidMount = () => {
     firebase.auth().onAuthStateChanged((user) => {
       this.setState({ isSignedIn: !!user });
-      //this.setState({ photo: firebase.auth().currentUser.photoURL });
       try {
         if (!firebase.auth().currentUser.photoURL) {
           this.setState({ photo: this.state.photo });
         } else {
           this.setState({ photo: firebase.auth().currentUser.photoURL });
           this.setState({ User: firebase.auth().currentUser });
-  //        NewProjects.props.setState
-  //        state.userCredendials.userID=firebase.auth().currentUser.uid
-  }     
+          const createUser = async ()=>{
+          try {
+            let usr ={
+              idUser:firebase.auth().currentUser.uid,
+              name:firebase.auth().currentUser.displayName
+            }
+              await axios.post(
+                "http://localhost:5000/applandproyects/us-central1/api/createUser",
+                 usr 
+              );
+          } catch (error) {
+            console.log("createUser",error);
+          }
+        }
+        createUser();
+          //        NewProjects.props.setState
+          //        state.userCredendials.userID=firebase.auth().currentUser.uid
+        }
       } catch (error) {
-        console.log('setPhoto');
+        //console.log('setPhoto',error);
       }
-});
-console.log(NewProjects.userCredendials);
-};
+    });
+    //console.log(NewProjects.userCredendials);
+  };
 
-
-render() {
-    //const {user}=this.props
-    //console.log(this.state.User);
+  render() {
     return (
       <div>
         <nav className="center flex fixed  w-full z-10 top-0 items-center justify-between flex-wrap bg-gray-700 p-1">
-          
           <div className="flex items-center flex-shrink-0 text-teal-200 mr-6">
             <a href="/" className="font-semibold text-xl tracking-tight">
               Appland Projects
@@ -126,11 +125,9 @@ render() {
               </div>
             </form>
             <button
-              /*  onClick={this.Login} */
               onClick={(e) => {
                 this.showModal();
               }}
-              //id="centered-toggle-button"
               type="button"
               id="googleLogin"
               className="mx-3 lg:inline-block z-10  block h-8 w-8 rounded-full overflow-hidden border-2 border-gray-600 focus:outline-none focus:border-white"
@@ -149,7 +146,13 @@ render() {
               <h1>{firebase.auth().currentUser.displayName}</h1>
               <button
                 className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-                onClick={() => firebase.auth().signOut() && this.setState({ photo:"https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2FNoProfile.jpg?alt=media&token=e11b597b-cfd8-4675-b263-f810a9bcb902"}) }
+                onClick={() =>
+                  firebase.auth().signOut() &&
+                  this.setState({
+                    photo:
+                      "https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2FNoProfile.jpg?alt=media&token=e11b597b-cfd8-4675-b263-f810a9bcb902",
+                  })
+                }
               >
                 Cerrar Sesión
               </button>

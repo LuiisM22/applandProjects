@@ -14,7 +14,6 @@ const ProjectsDetails = (props) => {
           "http://localhost:5000/applandproyects/us-central1/api/projectByID",
           { id: projectId }
         );
-        //console.log(data);
         setState((prevState) => ({
           ...prevState,
           id: data.data.id,
@@ -53,15 +52,14 @@ const ProjectsDetails = (props) => {
 
   let deleteProject = async (e) => {
     e.preventDefault();
-    //console.log(state.id ); 
     try {
       await axios.post(
         "http://localhost:5000/applandproyects/us-central1/api/deleteProject",
         { id: state.id }
       );
-      props.history.push("/")
+      props.history.push("/");
     } catch (error) {
-      console.log("deleteProject", error);
+      //console.log("deleteProject", error);
     }
   };
 
@@ -70,7 +68,6 @@ const ProjectsDetails = (props) => {
       const getDataCategory = async (query) => {
         try {
           showLoader();
-          //console.log(state.category.id);
           const {
             data,
           } = await axios.post(
@@ -83,7 +80,7 @@ const ProjectsDetails = (props) => {
           }));
           hideLoader();
         } catch (error) {
-          console.log("getDataCategory", error);
+          //console.log("getDataCategory", error);
         }
       };
       const getDataAuthor = async (query) => {
@@ -99,7 +96,7 @@ const ProjectsDetails = (props) => {
             author: { name: data.data.name, id: data.data.id },
           }));
         } catch (error) {
-          console.log("getDataAutor", error);
+          //console.log("getDataAutor", error);
         }
       };
       const getDataType = async (query) => {
@@ -110,13 +107,12 @@ const ProjectsDetails = (props) => {
             "http://localhost:5000/applandproyects/us-central1/api/type",
             { id: state.type.id }
           );
-          //console.log("dataType", data);
           setState((prevState) => ({
             ...prevState,
             type: { name: data.data.name, id: data.data.id },
           }));
         } catch (error) {
-          console.log("getDataType", error);
+          //console.log("getDataType", error);
         }
       };
       getDataAuthor();
@@ -127,35 +123,7 @@ const ProjectsDetails = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-    //setState({ [e.target.name]: e.target.value });
-    //setProject();
     /*
-        //e.preventDefault();
-
-    //setState({ [e.target.name]: e.target.value });
-    //setProject();
-     try {
-      //console.log(state);
-      let config = {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(state.id),
-      };
-      let res = await fetch(
-        "http://localhost:5000/applandproyects/us-central1/api/deleteProject",
-        config
-      );
-      let json = await res.json();
-      console.log(json);
-      props.history.push("/")
-    } catch (error) {
-      console.log("deleteProject", error);
-    }
-     ////////
     try {
       //console.log(state);
       let config = {
@@ -194,7 +162,6 @@ const ProjectsDetails = (props) => {
   } = state;
   const [loader, showLoader, hideLoader] = UseLoader();
 
-  //const {onChange , form}=this.props
   return (
     <div class="container">
       <form onSubmit={handleSubmit} className="ml-10  pt-12 mt-8">
@@ -306,18 +273,18 @@ const ProjectsDetails = (props) => {
             </div>
           </div>
           <div className=" pb-12 ml-20 md:items-right">
-          <div className="md:w-2/3">
-            <button
-              onClick={deleteProject}
-              className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-              type="button"
-            >
-              Eliminar
-            </button>
+            <div className="md:w-2/3">
+              <button
+                onClick={deleteProject}
+                className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="button"
+              >
+                Eliminar
+              </button>
+            </div>
           </div>
         </div>
-        </div>
-        
+
         <div className=" md:items-left mt-4 mb-4">
           <div className="md:w-2/3 flex mr-2">
             <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1">
@@ -410,8 +377,6 @@ const ProjectsDetails = (props) => {
           </div>
         </div>
       </form>
-        
-
       {loader}
     </div>
   );

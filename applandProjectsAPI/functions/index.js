@@ -195,7 +195,31 @@ app.post("/comments", async (req, res) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-app.post("/projects", async (req, res) => {
+app.post("/createUser", async (req, res) => {
+  let {
+    idUser,
+    name
+  } = req.body;
+
+  try {
+    let docRef = await db.collection('users').doc(idUser).set({
+      name
+    });
+    if (docRef) {
+      res.status(201).json({
+        success: true,
+        message: "Usuario guardado correctamente",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "no se ha guardado correctamente",
+    });
+  }
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////
+app.post("/createProject", async (req, res) => {
   let {
     img,
     title,
