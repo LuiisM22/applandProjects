@@ -151,21 +151,21 @@ app.post("/user", async (req, res) => {
   }
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-/* app.post("/Delete", async(req, res) =>{
+ app.post("/deleteProject", async(req, res) =>{
   try {
     let { id } = req.body;
-    let docRef = db.collection("projects").doc(id).delete().then(function() {})
+    let docRef = db.collection("projects").doc(id).delete();
       res.status(201).json({
         success: true,
-        message: "datos borrados correctamente",})
+        message: "datos borrados correctamente"})
   } catch (error) {
     res.status(500).json({
       success: false,
-      data: [],
-      error,
+      error
     });
     console.log(error.message);
-  }; */
+  }
+});
 //////////////////////////////////////////////////////////////////////////////////
 app.post("/comments", async (req, res) => {
   let data = [];

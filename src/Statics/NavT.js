@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import SimpleModal from "../Services/Modal";
 import PropTypes from "prop-types";
-//import firebase from "firebase";
+import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-const firebase = require('firebase/app');
+//const firebase = require('firebase/app');
+import NewProjects from "../Components/NewProjects";
 
 firebase.initializeApp({
   apiKey: "AIzaSyAauRcZVPtFCEUKS8eKdPXxv2N0WpuFoSc",
@@ -15,14 +16,17 @@ SimpleModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
 };
+
 export class NavT extends Component {
   state = {
     inputSearch: "",
     isSignedIn: false,
+    User:{},
     photo:
       "https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2FNoProfile.jpg?alt=media&token=e11b597b-cfd8-4675-b263-f810a9bcb902",
     show: false,
   };
+
   showModal = (e) => {
     this.setState({
       show: !this.state.show,
@@ -44,11 +48,10 @@ export class NavT extends Component {
   _handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state.inputSearch);
-    //this.firebase.auth.g
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(this.state.inputSearch);
+    console.log(this.state.inputSearch);
     //this.firebase.auth.g
   };
   /*     Login(){
@@ -62,21 +65,30 @@ export class NavT extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       this.setState({ isSignedIn: !!user });
       //this.setState({ photo: firebase.auth().currentUser.photoURL });
-      if (!firebase.auth().currentUser.photoURL) {
-        this.setState({ photo: this.state.photo });
-      } else {
-        this.setState({ photo: firebase.auth().currentUser.photoURL });
+      try {
+        if (!firebase.auth().currentUser.photoURL) {
+          this.setState({ photo: this.state.photo });
+        } else {
+          this.setState({ photo: firebase.auth().currentUser.photoURL });
+          this.setState({ User: firebase.auth().currentUser });
+  //        NewProjects.props.setState
+  //        state.userCredendials.userID=firebase.auth().currentUser.uid
+  }     
+      } catch (error) {
+        console.log('setPhoto');
       }
-    });
-  };
+});
+console.log(NewProjects.userCredendials);
+};
 
 
-  render() {
+render() {
     //const {user}=this.props
+    //console.log(this.state.User);
     return (
       <div>
         <nav className="center flex fixed  w-full z-10 top-0 items-center justify-between flex-wrap bg-gray-700 p-1">
-
+          
           <div className="flex items-center flex-shrink-0 text-teal-200 mr-6">
             <a href="/" className="font-semibold text-xl tracking-tight">
               Appland Projects

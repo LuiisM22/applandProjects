@@ -1,19 +1,35 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FileUpload from "./FileUpload";
+import {NavT} from "../Statics/NavT";
+const firebase = require('firebase/app');
+
 const ProjectsForm = (props) => {
   let cond = true;
   const [state, setState] = useState({
     DataCategory: [],
     author: { id: null, name: null },
-    URLi:''
+    URLi:'',
+    userCredendials: {userID:""}
   });
   const [state2, setState2] = useState({
     DataType: [],
-    category: "",
+    category: ""
   });
 
   useEffect(() => {
+    try {
+      
+      //this.setState({ userCredendials: NavT.state.User });
+      //console.log(state.userCredendials);
+      
+      /* if (firebase.auth().currentUser.uid) {
+        state.userCredendials.userName= firebase.auth().currentUser.displayName
+        console.log(firebase.auth().currentUser.uid );
+      } */
+    } catch (e) {
+    console.log("uid:null");
+  }
     //console.log(state.DataType);
     //let a=0
     if (cond) {
@@ -98,8 +114,16 @@ const ProjectsForm = (props) => {
         ...state,
         URLi:urlvalue
     })
+  }
+  try {
+    
+  } catch (error) {
     
   }
+    //state.userCredendials.userID=firebase.auth().currentUser.uid
+    //console.log(firebase.auth().currentUser.b);
+  
+  //console.log(state.userCredendials.uid);
   return (
     <div className="container">
       <form onSubmit={handleSubmit} className="ml-10 pb-12 pt-12 mt-8">
@@ -107,11 +131,6 @@ const ProjectsForm = (props) => {
           <div className="w-64 h-64 mt-2 mb-1">
             <div className="">
               <FileUpload getURL={getURL}></FileUpload>
-              {/* <img
-                src="https://firebasestorage.googleapis.com/v0/b/applandproyects.appspot.com/o/src%2Fimg%2F350-512.png?alt=media&token=0c5119c5-9b91-452b-8b73-d1dba2cf44e7"
-                className="border-1 border-gray-200 w-60  mr-4"
-                alt=" "
-              ></img> */}
             </div>
           </div>
           <div className="w-full md:items-left">
@@ -121,7 +140,7 @@ const ProjectsForm = (props) => {
                   Nombre del Proyecto
                 </label>
               </div>
-              <div className="md:w-2/4">
+              <div className="md:w-2/4">            
                 <input
                   className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
                   id="inline-full-name"
@@ -132,28 +151,10 @@ const ProjectsForm = (props) => {
                   value={state.projectName}
                   {...(state.author = "TE3EtuGzbF2F9ZNa64Fv")}
                   {...(state.img = state.URLi)}
-                  {...(state.qualification = "N/A")}
+                  {...(state.qualification = "0")}
                 ></input>
               </div>
             </div>
-            {/*               <div className="md:flex md:items-left mt-4 mb-4">
-                <div className="md:w-1/6 mr-2">
-                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1">
-                    Autor
-                  </label>
-                </div>
-                <div className="md:w-2/4">
-                  <input
-                    className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
-                    id="inline-full-name"
-                    placeholder="Autor"
-                    name="author"
-                     
-                    onChange={this.handleChange}
-                    value={this.state.author}
-                  ></input>
-                </div>
-              </div> */}
             <div className="md:flex md:items-left mt-4 mb-4">
               <div className="md:w-1/6 mr-2">
                 <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-1">

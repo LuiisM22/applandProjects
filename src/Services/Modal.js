@@ -1,5 +1,5 @@
-import React from "react";
-export default class SimpleModal extends React.Component {
+import React, { Component } from "react";
+export default class SimpleModal extends Component {
   onClose = e => {
     this.props.onClose && this.props.onClose(e);
   };
