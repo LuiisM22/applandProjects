@@ -67,7 +67,7 @@ export class NavT extends Component {
               name:firebase.auth().currentUser.displayName
             }
               await axios.post(
-                "http://localhost:5000/applandproyects/us-central1/api/createUser",
+                "https://us-central1-applandproyects.cloudfunctions.net/api/createUser",
                  usr 
               );
           } catch (error) {

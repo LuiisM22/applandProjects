@@ -31,7 +31,7 @@ const ProjectsForm = (props) => {
       const getDataCategory = async (query) => {
         try {
           let { data } = await axios.get(
-            "http://localhost:5000/applandproyects/us-central1/api/categories"
+            "https://us-central1-applandproyects.cloudfunctions.net/api/categories"
           );
           if (data.success) {
             setState({
@@ -51,7 +51,7 @@ const ProjectsForm = (props) => {
       const getDataType = async (query) => {
         try {
           let { data } = await axios.get(
-            "http://localhost:5000/applandproyects/us-central1/api/types"
+            "https://us-central1-applandproyects.cloudfunctions.net/api/types"
           );
           if (data.success) {
             setState2({
@@ -81,7 +81,7 @@ const ProjectsForm = (props) => {
         body: JSON.stringify(state),
       };
       await fetch(
-        "http://localhost:5000/applandproyects/us-central1/api/createProject",
+        "https://us-central1-applandproyects.cloudfunctions.net/api/createProject",
         config
       );
       ///let json = await res.json();

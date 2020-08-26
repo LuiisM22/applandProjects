@@ -13,7 +13,7 @@ const Grid = (props) => {
   const getData = async () => {
     try {
       let { data } = await axios.get(
-        "http://localhost:5000/applandproyects/us-central1/api/projects"
+        "https://us-central1-applandproyects.cloudfunctions.net/api/projects"
       );
       if (data.success) {
         setState({

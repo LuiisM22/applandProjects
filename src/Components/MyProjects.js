@@ -13,7 +13,7 @@ export class MyProjects extends Component {
   async getData() {
     try {
       let { data } = await axios.post(
-        "http://localhost:5000/applandproyects/us-central1/api/types"
+        "https://us-central1-applandproyects.cloudfunctions.net/api/types"
       );
       if (data.success) {
         console.log(data);

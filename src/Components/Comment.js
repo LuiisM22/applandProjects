@@ -17,7 +17,7 @@ const Comment = (props) => {
           const {
             data,
           } = await axios.post(
-            "http://localhost:5000/applandproyects/us-central1/api/user",
+            "https://us-central1-applandproyects.cloudfunctions.net/api/user",
             { id: props.data.user }
           );
           setState((prevState) => ({

@@ -20,7 +20,7 @@ const LoadComments = (props) => {
           const {
             data,
           } = await axios.post(
-            "http://localhost:5000/applandproyects/us-central1/api/comments",
+            "https://us-central1-applandproyects.cloudfunctions.net/api/comments",
             { project: state.idProject }
           );
           setState((prevState) => ({

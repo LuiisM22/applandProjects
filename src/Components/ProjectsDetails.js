@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 import LoadComments from "../Services/LoadComments";
 import UseLoader from "../Services/UseLoader";
@@ -26,7 +25,7 @@ const ProjectsDetails = (props) => {
         const {
           data,
         } = await axios.post(
-          "http://localhost:5000/applandproyects/us-central1/api/projectByID",
+          "https://us-central1-applandproyects.cloudfunctions.net/api/projectByID",
           { id: projectId }
         );
         setState((prevState) => ({
@@ -80,7 +79,7 @@ const ProjectsDetails = (props) => {
     e.preventDefault();
     try {
         await axios.post(
-          "http://localhost:5000/applandproyects/us-central1/api/createComment",
+          "https://us-central1-applandproyects.cloudfunctions.net/api/createComment",
            stateComment 
         );
         props.history.push(`/`);
@@ -93,7 +92,7 @@ const ProjectsDetails = (props) => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/applandproyects/us-central1/api/deleteProject",
+        "https://us-central1-applandproyects.cloudfunctions.net/api/deleteProject",
         { id: state.id }
       );
     props.history.push('/');
@@ -111,7 +110,7 @@ const ProjectsDetails = (props) => {
           const {
             data,
           } = await axios.post(
-            "http://localhost:5000/applandproyects/us-central1/api/category",
+            "https://us-central1-applandproyects.cloudfunctions.net/api/category",
             { id: state.category.id }
           );
           setState((prevState) => ({
@@ -128,7 +127,7 @@ const ProjectsDetails = (props) => {
           const {
             data,
           } = await axios.post(
-            "http://localhost:5000/applandproyects/us-central1/api/user",
+            "https://us-central1-applandproyects.cloudfunctions.net/api/user",
             { id: state.author.id }
           );
           setState((prevState) => ({
@@ -144,7 +143,7 @@ const ProjectsDetails = (props) => {
           const {
             data,
           } = await axios.post(
-            "http://localhost:5000/applandproyects/us-central1/api/type",
+            "https://us-central1-applandproyects.cloudfunctions.net/api/type",
             { id: state.type.id }
           );
           setState((prevState) => ({

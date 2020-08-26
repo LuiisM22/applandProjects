@@ -25,7 +25,7 @@ const Card = (props) => {
             let {
               data,
             } = await axios.post(
-              "http://localhost:5000/applandproyects/us-central1/api/category",
+              "https://us-central1-applandproyects.cloudfunctions.net/api/category",
               { id: state.category.id }
             );
             //console.log("dataCategory", data);
@@ -45,7 +45,7 @@ const Card = (props) => {
             let {
               data,
             } = await axios.post(
-              "http://localhost:5000/applandproyects/us-central1/api/user",
+              "https://us-central1-applandproyects.cloudfunctions.net/api/user",
               { id: state.author.id }
             );
             //console.log("dataUser", data);
