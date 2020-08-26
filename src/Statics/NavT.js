@@ -59,6 +59,7 @@ export class NavT extends Component {
         } else {
           this.setState({ photo: firebase.auth().currentUser.photoURL });
           this.setState({ User: firebase.auth().currentUser });
+          
           const createUser = async ()=>{
           try {
             let usr ={

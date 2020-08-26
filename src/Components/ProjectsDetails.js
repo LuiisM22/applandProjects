@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import LoadComments from "../Services/LoadComments";
 import UseLoader from "../Services/UseLoader";
 
 const ProjectsDetails = (props) => {
+  const [state, setState] = useState({
+    id: null,
+    img: " ",
+    title: " ",
+    author: { id: null, name: null },
+    category: { id: null, name: null },
+    date: " ",
+    type: { id: null, name: null },
+    description: " ",
+    qualification: "",
+    authorDescription: " ",
+    longDescription: " ",
+    keyWords: " ",
+  });
   const getDataInf = async (query) => {
     const projectId = props.match.params.id;
     try {
@@ -29,26 +44,50 @@ const ProjectsDetails = (props) => {
           longDescription: data.data.longDescription,
           keyWords: data.data.keyWords,
         }));
+        setStateComment({
+          ...stateComment,
+          project: data.data.id,
+        });
+        
       }
     } catch (error) {
       console.log("getDataInf", error);
+      
     }
   };
-  const [state, setState] = useState({
-    id: null,
-    img: " ",
-    title: " ",
-    author: { id: null, name: null },
-    category: { id: null, name: null },
-    date: " ",
-    type: { id: null, name: null },
-    description: " ",
-    qualification: " ",
-    authorDescription: " ",
-    longDescription: " ",
-    keyWords: " ",
-  });
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  let yyyy = today.getFullYear();
+  today = mm + '/' + dd + '/' + yyyy;
+  //console.log(today);
   getDataInf();
+  const handleChange = (e) => {
+    setStateComment({
+      ...stateComment,
+      [e.target.name]: e.target.value,
+    });
+  };
+  
+  const [stateComment, setStateComment] = useState({
+    user:"I9fBsMiMeRcVdZWuMz6qdo557WO2",
+    qualification:"",
+    project: "",
+    body:"",
+    date:today
+  });
+  const createComment = async (e)=>{
+    e.preventDefault();
+    try {
+        await axios.post(
+          "http://localhost:5000/applandproyects/us-central1/api/createComment",
+           stateComment 
+        );
+        props.history.push(`/`);
+    } catch (error) {
+      console.log("createComment",error);
+    }
+  }
 
   let deleteProject = async (e) => {
     e.preventDefault();
@@ -57,11 +96,12 @@ const ProjectsDetails = (props) => {
         "http://localhost:5000/applandproyects/us-central1/api/deleteProject",
         { id: state.id }
       );
-      props.history.push("/");
+    props.history.push('/');
     } catch (error) {
       //console.log("deleteProject", error);
     }
   };
+
 
   useEffect(() => {
     if (!state.author.name && !state.category.name && !state.type.name) {
@@ -120,31 +160,6 @@ const ProjectsDetails = (props) => {
       getDataCategory();
     }
   });
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    /*
-    try {
-      //console.log(state);
-      let config = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(state.id),
-      };
-      let res = await fetch(
-        "http://localhost:5000/applandproyects/us-central1/api/Delete",
-        config
-      );
-      let json = await res.json();
-      console.log(json);
-      props.history.push("/")
-    } catch (error) {
-      console.log(error);
-    } */
-  };
 
   const {
     id,
@@ -164,7 +179,7 @@ const ProjectsDetails = (props) => {
 
   return (
     <div class="container">
-      <form onSubmit={handleSubmit} className="ml-10  pt-12 mt-8">
+      <form className="ml-10  pt-12 mt-8">
         <div className="md:flex w-full max-sm">
           <div className="w-1/6 mt-8 mb-1">
             <div className="">
@@ -346,7 +361,7 @@ const ProjectsDetails = (props) => {
         </div>
       </div>
 
-      <form>
+      <form onSubmit={createComment}>
         <div className=" md:items-left ml-10 mt-4 mb-4">
           <div className="md:w-1/6 mr-2">
             <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-1">
@@ -354,15 +369,39 @@ const ProjectsDetails = (props) => {
             </label>
           </div>
           <div className="md:w-1/12 mb-4">
-            <input className="pl-12 bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"></input>
+            <input 
+            required
+            type="range"
+            min="0"
+            max="5"
+            id="inline-full-name"
+            name="qualification"
+            onChange={handleChange}
+            value={stateComment.Qualification}
+            className=" bg-gray-200  border-0 border-gray-200 rounded w-full  text-gray-700 pt-2 pb-2 focus:outline-none focus:bg-white focus:border-teal-200"
+            >
+            </input>
+            <div
+              className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full h-auto  text-gray-700  focus:outline-none focus:bg-white focus:border-teal-200"
+            >
+            <label className="pl-10%">0</label>
+            <label className="pl-2">1</label>
+            <label className="pl-2">2</label>
+            <label className="pl-2">3</label>
+            <label className="pl-2">4</label>
+            <label className="pl-2">5</label>
+            </div>
+
           </div>
           <div className="mb-8 bg-gray-200 appearance-none border-0 border-gray-200 rounded  flex w-2/3  h-auto py-1 px-3 ">
             <input
               required
-              className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
               id="inline-full-name"
-              placeholder="Descripción"
-              name="Comentar"
+              name="body"
+              onChange={handleChange}
+              className="bg-gray-200 appearance-none border-0 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-200"
+              value={stateComment.body}
+              placeholder="Comentario"
             ></input>
           </div>
         </div>
@@ -370,7 +409,7 @@ const ProjectsDetails = (props) => {
           <div className="md:w-2/3">
             <button
               className="shadow bg-gray-700 text-teal-200 hover:border-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-              type="submit"
+              type="POST"
             >
               Guardar
             </button>

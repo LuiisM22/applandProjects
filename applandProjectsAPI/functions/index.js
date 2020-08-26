@@ -193,6 +193,37 @@ app.post("/comments", async (req, res) => {
     console.log(error.message);
   }
 });
+////////////////////////////////////////////////////////////////////////////////////////////////////
+app.post("/createComment", async (req, res) => {
+  let {
+    user,
+    qualification,
+    project,
+    body,
+    date
+  } = req.body;
+
+  try {
+    let docRef = await db.collection('comments').add({
+      user,
+      qualification,
+      project,
+      body,
+      date
+    });
+    if (docRef) {
+      res.status(201).json({
+        success: true,
+        message: "Comentario guardado correctamente",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "no se ha guardado correctamente",
+    });
+  }
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/createUser", async (req, res) => {

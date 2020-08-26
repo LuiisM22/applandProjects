@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FileUpload from "./FileUpload";
-import { NavT } from "../Statics/NavT";
 const firebase = require("firebase/app");
 
 const ProjectsForm = (props) => {
@@ -81,7 +80,7 @@ const ProjectsForm = (props) => {
         },
         body: JSON.stringify(state),
       };
-      let res = await fetch(
+      await fetch(
         "http://localhost:5000/applandproyects/us-central1/api/createProject",
         config
       );
